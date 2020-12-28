@@ -1,0 +1,142 @@
+.current-page {
+    display: inline-block;
+    position: relative;
+}
+.current-page:before {
+    content: '_';
+    display: inline-block;
+    position: absolute;
+    bottom: -0.5em;
+    left: 0;
+    text-align: center;
+    font-size: larger;
+    width: 100%;
+
+}
+#content-wrap {
+	text-align: center;
+	word-wrap: break-word;
+	margin: 1em 2em;
+	position: relative;
+}
+
+/*header and footer*/
+#header {
+    height: 120px;
+    width: 100%;
+    background-color: LightBlue;
+    color: Black;
+    font-size: larger;
+    text-align: center;
+    border: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-self: center;
+    top: 0;
+    left: 0px;
+    right: 0px;
+    position: absolute;
+}
+
+#footer {
+    height: 20px;
+    width: 100%;
+    background-color: LightBlue;
+    color: Black;
+    font-size: smaller;
+    text-align: center;
+    border: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-self: center;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+#page-container {
+    position: relative;
+    min-height: 100vh;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  
+#content-wrap {
+    padding-top: 150px; /*header height */
+    padding-bottom: 60px;    /* Footer height */
+  }
+
+.leftImage {
+    float: left;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+/*navbar*/
+nav{
+    width: 100vw;
+    background-color: LightBlue;
+    text-align: center;
+    justify-content: center;
+    height: 20px;
+    padding-bottom: 10px;
+}
+
+
+ul{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    text-align: center;
+    display:inline-block;
+  }
+
+li{
+    list-style-type: none;
+    margin: 0 3vw;
+    padding: 0;
+    display:inline-block;
+    text-align: center;
+  }
+
+  ul li a
+  {display: inline-block;
+    position: relative;
+    display: block;
+  }
+  
+  ul li  a:link {
+      color: Black;
+      text-decoration: none;
+  }
+  
+  ul li a:visited {
+      color: Black;
+      text-decoration: none;
+  }
+  
+  ul li a:hover {
+      color: Black;
+      
+  }
+  
+  ul li a:hover:before {
+      content: '.';
+      display: inline-block;
+  
+      position: absolute;
+      bottom: -0.5em;
+      left: 0;
+  
+      text-align: center;
+      font-size: larger;
+      width: 100%;
+  
+  }
+  
+  ul li a:active {
+      color: Black;
+      text-decoration: none;
+  }
+  

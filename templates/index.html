@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- title: CHANGE ME -->
+        <title>Home</title>
+        
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="../static/css/stylesheet.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- scripts-->
+    <script src="../static/js/script.js"></script>
+    
+    <!-- meta -->
+    <meta name="author" content="Maggie Hunt">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Calculate the pace you need to run at, and generate a Spotify playlist to match it.">
+    <meta name="keywords" content="python,HTML,CSS,javascript,Spotify,API,coding,programming">
+    
+    <div id="header"><h1>Cadence</h1>
+        <nav>
+        <ul>
+            <li class="current-page">
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/about">About</a>
+            </li>
+        </ul> 
+    </nav>
+    </div>
+</head>
+<body>
+    <section id="content-wrap"> 
+        <div class="content-wrap"><br> 
+            <form form method="post" action="/results" onsubmit="return results()" id="user_input_form" enctype="multipart/form-data">
+              <div class="form-group">
+<p>Enter your details here to generate your ideal bpm.</p>
+<div class="row">
+    First Sample Run
+    <div class="col">
+      <input type="number" id="pace_minutes1" name="pace_minutes1" class="form-control" placeholder="Pace (minutes)" required>
+      <label class="form-check-label" for="pace_minutes1">m</label>
+    </div>
+    <div class="col">
+      <input type="number"  id="pace_seconds1" name="pace_seconds1" class="form-control" placeholder="Pace (seconds)" required>
+      <label class="form-check-label" for="pace_seconds1">s</label>
+    </div>
+    <div class="col">
+      <input type="number"  id="cadence1" name="cadence1" class="form-control" placeholder="Cadence (steps per minute)" required>
+      <label class="form-check-label" for="cadence1">spm</label>
+    </div>
+  </div>
+  <div class="row">
+    Second Sample Run
+    <div class="col">
+        <input type="number" id="pace_minutes2" name="pace_minutes2" class="form-control" placeholder="Pace (minutes)" required>
+        <label class="form-check-label" for="pace_minutes2">m</label>
+      </div>
+      <div class="col">
+        <input type="number"  id="pace_seconds2" name="pace_seconds2" class="form-control" placeholder="Pace (seconds)" required>
+        <label class="form-check-label" for="pace_seconds2">s</label>
+      </div>
+      <div class="col">
+        <input type="number"  id="cadence2" name="cadence2" class="form-control" placeholder="Cadence (steps per minute)" required>
+        <label class="form-check-label" for="cadence2">spm</label>
+      </div>
+    </div>
+  <div class="row">
+  Third Sample Run
+    <div class="col">
+        <input type="number" id="pace_minutes3" name="pace_minutes3" class="form-control" placeholder="Pace (minutes)" required>
+        <label class="form-check-label" for="pace_minutes3">m</label>
+      </div>
+      <div class="col">
+        <input type="number"  id="pace_seconds3" name="pace_seconds3" class="form-control" placeholder="Pace (seconds)" required>
+        <label class="form-check-label" for="pace_seconds3">s</label>
+      </div>
+      <div class="col">
+        <input type="number"  id="cadence3" name="cadence3" class="form-control" placeholder="Cadence (steps per minute)" required>
+        <label class="form-check-label" for="cadence3">spm</label>
+      </div>
+    </div>
+  <div class="row">
+    Ideal Run
+    <div class="col">
+        <input type="number"  id="desired_distance" name="desired_distance" class="form-control" placeholder="Desired_distance (km)" required>
+        <label class="form-check-label" for="desired_distance">km</label>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col">
+        <input type="number"  id="desired_time_hours" name="desired_time_hours" class="form-control" placeholder="Time (hours)" required>
+        <label class="form-check-label" for="desired_time_hours">h</label>
+      </div><div class="col">
+      <input type="number" id="desired_time_minutes" name="desired_time_minutes" class="form-control" placeholder="Time (minutes)" required>
+      <label class="form-check-label" for="desired_time_minutes">min</label>
+    </div>
+    <div class="col">
+      <input type="number"  id="desired_time_seconds" name="desired_time_seconds" class="form-control" placeholder="Time (seconds)" required>
+      <label class="form-check-label" for="desired_time_seconds">secs</label>
+    </div>
+<div class="row"><div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+</form>
+  </div> 
+    </section>
+</div> 
+</body>
+</html>

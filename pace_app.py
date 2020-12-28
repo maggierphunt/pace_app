@@ -1,9 +1,17 @@
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, Response
 
 app = Flask("pace_app") #making an app
-@app.route("/calc")
+
+#About
+@app.route("/about")  
+def about_page():
+        return render_template("about.html")
+
+#Homepage
+@app.route("/")
 def calculate_bpm():
+    return render_template("index.html")
 #raw_input
     pace_minutes1 = int(input("What was your km pace for example run 1 (minutes)?"))
     pace_seconds1 = int(input("What was your km pace for example run 1 (seconds)?"))
@@ -42,7 +50,12 @@ def calculate_bpm():
     minute_pace = seconds_pace * 60
     bpm = round(minute_pace)
     print (bpm, "bpm")
-calculate_bpm()
+
+
+#Results
+@app.route("/results")  
+def results():
+        return render_template("results.html")
 
 #debug
 app.run(debug=True) #runs the app. the debug part - unlocks debugging feature
