@@ -10,25 +10,31 @@ def about_page():
 
 #Homepage
 @app.route("/")
+def home_page():
+        return render_template("index.html")
+
+#Results
+@app.route("/results", methods=["GET", "POST"])  
 def calculate_bpm():
-    return render_template("index.html")
+    form_data = request.form
+    
 #raw_input
-    pace_minutes1 = int(input("What was your km pace for example run 1 (minutes)?"))
-    pace_seconds1 = int(input("What was your km pace for example run 1 (seconds)?"))
-    cadence1 = int(input("Whats was your cadence in example run 1?"))
+    pace_minutes1 = int(form_data['pace_minutes1'])
+    pace_seconds1 = int(form_data['pace_seconds1'])
+    cadence1 = int(form_data['cadence1'])
 
-    pace_minutes2 = int(input("What was your km pace for example run 2 (minutes)?"))
-    pace_seconds2 = int(input("What was your km pace for example run 2 (seconds)?"))
-    cadence2 = int(input("Whats was your cadence in example run 2?"))
+    pace_minutes2 = int(form_data['pace_minutes2'])
+    pace_seconds2 = int(form_data['pace_seconds2'])
+    cadence2 = int(form_data['cadence2'])
 
-    pace_minutes3 = int(input("What was your km pace for example run 3 (minutes)?"))
-    pace_seconds3 = int(input("What was your km pace for example run 3 (seconds)?"))
-    cadence3 = int(input("Whats was your cadence in example run 3?"))
+    pace_minutes3 = int(form_data['pace_minutes3'])
+    pace_seconds3 = int(form_data['pace_seconds3'])
+    cadence3 = int(form_data['cadence3'])
 
-    desired_distance = int(input("What is the distance you are training for (km)?"))
-    desired_time_hours = int(input("How much time would you like to run it in (hours)?"))
-    desired_time_minutes = int(input("How much time would you like to run it in (minutes)?"))
-    desired_time_seconds = int(input("How much time would you like to run it in (seconds)?"))
+    desired_distance = int(form_data['desired_distance'])
+    desired_time_hours = int(form_data['desired_time_hours'])
+    desired_time_minutes = int(form_data['desired_time_minutes'])
+    desired_time_seconds = int(form_data['desired_time_seconds'])
 #total time for 1km in seconds
     km_pace_1 = (pace_minutes1 * 60) + pace_seconds1
     km_pace_2 = (pace_minutes2 * 60) + pace_seconds2
@@ -51,11 +57,7 @@ def calculate_bpm():
     bpm = round(minute_pace)
     print (bpm, "bpm")
 
-
-#Results
-@app.route("/results")  
-def results():
-        return render_template("results.html")
+    return render_template("results.html", bpm)
 
 #debug
 app.run(debug=True) #runs the app. the debug part - unlocks debugging feature
