@@ -40,7 +40,7 @@ def calculate_bpm():
     desired_time_in_seconds = (desired_time_hours*60*60) + (desired_time_minutes * 60) + desired_time_seconds
     seconds_pace = number_of_steps_to_do / desired_time_in_seconds
     minute_pace = seconds_pace * 60
-    bpm = minute_pace
+    bpm = round(minute_pace)
     print (bpm, "bpm")
 calculate_bpm()
 
