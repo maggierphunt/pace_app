@@ -5,9 +5,9 @@
         <title>Home</title>
         
     <!-- stylesheets -->
-    <link rel="stylesheet" href="../static/css/stylesheet.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="../static/css/stylesheet.css">
+    
     <!-- scripts-->
     <script src="../static/js/script.js"></script>
     
@@ -33,6 +33,10 @@
     </div>
 </head>
 <body>
-<p>Your results are here.</p>
+    <section id="content-wrap"> 
+        <div class="content-wrap"><p>Your results are here{% if stride %}  and your average pace length is {{stride}}m{% else %} {% endif %}.
+    {% if bpm %} {% if km %}You need to run along to music running at {{bpm}}bpm to run {{km}}km in{% if hours != "0" %} {{hours}}h{% else %}{% endif %}{% if mins != "0" %} {{mins}}m{% else %}{% endif %}{% if seconds != "0" %} {{seconds}}s{% else %}{% endif %}.
+    {% else %} {% endif %}{% else %} {% endif %}</p>
+    </div></section>
 </body>
 </html>

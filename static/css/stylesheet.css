@@ -3,7 +3,7 @@
     position: relative;
 }
 .current-page:before {
-    content: '_';
+    content: '.';
     display: inline-block;
     position: absolute;
     bottom: -0.5em;

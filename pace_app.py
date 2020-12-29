@@ -14,7 +14,7 @@ def home_page():
         return render_template("index.html")
 
 #Results
-@app.route("/results", methods=["GET", "POST"])  
+@app.route("/results", methods=["POST"])  
 def calculate_bpm():
     form_data = request.form
     
@@ -48,16 +48,17 @@ def calculate_bpm():
     step_length_2 = distance_in_a_minute_2 / cadence2
     step_length_3 = distance_in_a_minute_3 / cadence3
     average_step_length = (step_length_1+step_length_2+step_length_3)/3
-    print (average_step_length, "average step length")
+    print (average_step_length)
+    stride_in_metres = round(average_step_length*1000,2)
 #desired result
     number_of_steps_to_do = desired_distance / average_step_length
     desired_time_in_seconds = (desired_time_hours*60*60) + (desired_time_minutes * 60) + desired_time_seconds
     seconds_pace = number_of_steps_to_do / desired_time_in_seconds
     minute_pace = seconds_pace * 60
     bpm = round(minute_pace)
-    print (bpm, "bpm")
+    print (bpm)
 
-    return render_template("results.html", bpm)
+    return render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'])
 
 #debug
 app.run(debug=True) #runs the app. the debug part - unlocks debugging feature
