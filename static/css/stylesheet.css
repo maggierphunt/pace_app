@@ -1,31 +1,28 @@
-.current-page {
-    display: inline-block;
-    position: relative;
-}
-.current-page:before {
-    content: '.';
-    display: inline-block;
-    position: absolute;
-    bottom: -0.5em;
-    left: 0;
-    text-align: center;
-    font-size: larger;
-    width: 100%;
-
-}
-#content-wrap {
+.content-wrap {
 	text-align: center;
 	word-wrap: break-word;
-	margin: 1em 2em;
-	position: relative;
+    background-color: rgba(0, 0, 0, .8);
+    margin:0;
+    padding:0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: Abel;
+    color: white;
 }
+
 
 /*header and footer*/
 #header {
     height: 120px;
     width: 100%;
-    background-color: LightBlue;
-    color: Black;
+    background-color: Black;
+    color: greenyellow;
     font-size: larger;
     text-align: center;
     border: 0px;
@@ -35,37 +32,43 @@
     top: 0;
     left: 0px;
     right: 0px;
-    position: absolute;
+    bottom: 200px;
+    position: relative;
+    font-family: Abel;
 }
 
-#footer {
+footer {
     height: 20px;
     width: 100%;
-    background-color: LightBlue;
-    color: Black;
+    background-color: black;
+    color: greenyellow;
     font-size: smaller;
     text-align: center;
     border: 0px;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 50px;
     align-self: center;
     position: fixed;
     bottom: 0px;
     left: 0px;
     right: 0px;
+    font-family: Abel;
 }
 
-#page-container {
-    position: relative;
-    min-height: 100vh;
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-  
-#content-wrap {
-    padding-top: 150px; /*header height */
-    padding-bottom: 60px;    /* Footer height */
-  }
+
+
+body {
+    background-image: url(../images/pexels-daniel-reche-3601094.jpg);
+    background-filter: grayscale(1);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Abel;
+    align-content: center;
+    margin:0;
+    padding:0;
+    height: 100%;
+    width: 100%;
+}
 
 .leftImage {
     float: left;
@@ -76,13 +79,80 @@
 /*navbar*/
 nav{
     width: 100vw;
-    background-color: LightBlue;
+    background-color: black;
+    color: greenyellow;
     text-align: center;
     justify-content: center;
     height: 20px;
     padding-bottom: 10px;
+    font-family: Abel;
+}
+.current-page {
+    display: inline-block;
+    position: relative;
+    font-family: Abel;
+    color: greenyellow;
+    text-decoration: none;
+    }
+    
+
+.current-page:before {
+    content: '👣';
+    color: greenyellow;
+    display: inline-block;
+    position: absolute;
+    bottom: -0.8em;
+    left: 0;
+    text-align: center;
+    font-size: 10px;
+    width: 100%;
+
 }
 
+
+li{
+    list-style-type: none;
+    margin: 0 3vw;
+    padding: 0;
+    display:inline-block;
+    text-align: center;
+    font-family: Abel;
+  }
+
+  ul li a
+  {display: inline-block;
+    position: relative;
+    display: block;
+  }
+
+li a:visited {
+    color: grey;
+      text-decoration: none;
+  }
+  li .current-page a:visited {
+    color: greenyellow;
+      text-decoration: none;
+  }
+
+  li .current-page a:active {
+    color: greenyellow;
+      text-decoration: none;
+  }
+
+li  a:link {
+    color: greenyellow;
+      text-decoration: none;
+  }
+  
+li a:active {
+    color: greenyellow;
+    text-decoration: none;
+}
+
+li a:hover {
+    color: greenyellow;
+      
+  }
 
 ul{
     margin: 0;
@@ -92,51 +162,139 @@ ul{
     display:inline-block;
   }
 
-li{
-    list-style-type: none;
-    margin: 0 3vw;
-    padding: 0;
-    display:inline-block;
+ul li a:hover:before {
+    content: '👣';
+    display: inline-block;
+
+    position: absolute;
+    bottom: -0.8em;
+    left: 0;
+
     text-align: center;
+    font-size: 10px;
+    width: 100%;
+
+}
+
+
+
+h1 { font-family: Abel; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 26.4px; }
+h3 { font-family: Abel; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; }
+p { font-family: Abel; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; }
+blockquote { font-family: Abel; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 30px; }
+pre { font-family: Abel; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }
+
+
+.form-group{
+    width: 800px;
+}
+
+.form-check-label{
+    
+    text-align: left;
+
+}
+
+form {
+    align-self: center;
+}
+
+
+.btn-dark {
+    align-self: center;
+    background-color: greenyellow;
+    color: black;
+    position: relative;
+    text-align: center; 
+}
+
+.center-row  {
+    align-self: center;
+    position: flex;
+    text-align: center; 
+    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.formInputs{
+    width: 70px;
+    float: left;
+    text-align: right;
+    height: 20px;
+    margin-right: 0px;
   }
 
-  ul li a
-  {display: inline-block;
-    position: relative;
-    display: block;
-  }
-  
-  ul li  a:link {
-      color: Black;
-      text-decoration: none;
-  }
-  
-  ul li a:visited {
-      color: Black;
-      text-decoration: none;
-  }
-  
-  ul li a:hover {
-      color: Black;
+label {
+    text-align: left;
+    display: inline-block;
+    width: auto;
+    align-self: left;
+    justify-self: left;
+    justify-content: left;
+}
+
+/*for small screens*/
+@media only screen and (max-width: 500px) {
+    
+    #header {
+        height: 100px;
+        font-size: large;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+    }
+
+    #footer {
+        height: 15px;
+        font-size: small;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #content-wrap {
+        padding-top: 60px; /*header height */
+        padding-bottom: 20px;    /* Footer height */
+    }
+
+    ul{
+        align-self: center;
+        padding: 0;
+        display: flex;
+        text-align: center;
+        width: 100vw;
+        font-size: smaller;
+        display:inline-block;
+      }
       
-  }
-  
-  ul li a:hover:before {
-      content: '.';
-      display: inline-block;
-  
-      position: absolute;
-      bottom: -0.5em;
-      left: 0;
-  
-      text-align: center;
-      font-size: larger;
-      width: 100%;
-  
-  }
-  
-  ul li a:active {
-      color: Black;
-      text-decoration: none;
-  }
-  
+ 
+
+    .form-group{
+        width: 450px;
+        font-size: 10px;
+    }
+
+    .formInputs{
+        width: 30px;
+        float: left;
+        text-align: right;
+        height: 20px;
+        margin-right: 0px;
+        padding: 0px;
+        font-size: 8px;
+      }
+    
+      /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+        -moz-appearance: textfield;
+        }
+
+    }
