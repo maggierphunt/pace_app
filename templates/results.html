@@ -36,7 +36,7 @@
    <div class="content-wrap">
             <p>Your results are here{% if stride %}  and your average pace length is {{stride}}m{% else %} {% endif %}.
     {% if bpm %} {% if km %}You need to run along to music running at {{bpm}}bpm to run {{km}}km in{% if hours != "0" %} {{hours}}h{% else %}{% endif %}{% if mins != "0" %} {{mins}}m{% else %}{% endif %}{% if seconds != "0" %} {{seconds}}s{% else %}{% endif %}.
-    {% else %} {% endif %}{% else %} {% endif %}</p>
+    {% else %} {% endif %}{% else %} {% endif %} {% if playlist_message}<br><i>{{playlist_message}}</i>{% endif %} </p>
 
     <iframe src={{playlist_url}} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     </div></div></div>
