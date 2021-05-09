@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, Response
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -7,8 +6,6 @@ import os
 from os import getenv
 import argparse
 import logging
-
-
 
 #Spotify params
 spotify_client_id = os.getenv('SPOTIPY_CLIENT_ID', 'client_id')
@@ -104,6 +101,7 @@ def calculate_bpm():
     name=playlist_name
     description=playlist_description
     playlist_owner_id=user_id
+    
     sp.user_playlist_create(user, name, public=True, collaborative=False, description=description)
     playlist_id=sp.user_playlist_create(user,name)['id']
     playlist_url=sp.user_playlist_create(user,name)['external_urls']['spotify']
@@ -126,7 +124,12 @@ def calculate_bpm():
     
     sp.playlist_add_items(playlist_id, items, position=None)
 
-    return sp.user_playlist_create(user, name), render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'], playlist_id=playlist_id, playlist_url=playlist_url)
+    if playlist_length<desired_time_in_seconds:
+        playlist_message = "On no! There is not enough music in your library to cover the whole run. You may have to put this playlist on repeat!"
+    else:
+        playlist_message = "What a great playlist - you have very good taste!"
+
+    return sp.user_playlist_create(user, name), p.playlist_add_items(playlist_id, items), render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'], playlist_message=playlist_message, playlist_id=playlist_id, playlist_url=playlist_url)
     
 #debug
-app.run(app.run(host="localhost", port=3000, debug=True)) #runs the app. the debug part - unlocks debugging feature
+app.run(app.run(host="localhost", port=5000, debug=True)) #runs the app. the debug part - unlocks debugging feature
