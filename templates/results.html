@@ -2,12 +2,12 @@
 <html>
 <head>
     <!-- title: CHANGE ME -->
-        <title>Home</title>
+        <title>👣 Cadence</title>
         
     <!-- stylesheets -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/stylesheet.css">
-    
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Abel" />
     <!-- scripts-->
     <script src="../static/js/script.js"></script>
     
@@ -18,7 +18,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Calculate the pace you need to run at, and generate a Spotify playlist to match it.">
     <meta name="keywords" content="python,HTML,CSS,javascript,Spotify,API,coding,programming">
-    
+</head>
+<body><section>
     <div id="header"><h1>Cadence</h1>
         <nav>
         <ul>
@@ -31,12 +32,25 @@
         </ul> 
     </nav>
     </div>
-</head>
-<body>
-    <section id="content-wrap"> 
-        <div class="content-wrap"><p>Your results are here{% if stride %}  and your average pace length is {{stride}}m{% else %} {% endif %}.
+<div>
+   <div class="content-wrap" >
+            <p>Your results are here{% if stride %}  and your average pace length is {{stride}}m{% else %} {% endif %}.
     {% if bpm %} {% if km %}You need to run along to music running at {{bpm}}bpm to run {{km}}km in{% if hours != "0" %} {{hours}}h{% else %}{% endif %}{% if mins != "0" %} {{mins}}m{% else %}{% endif %}{% if seconds != "0" %} {{seconds}}s{% else %}{% endif %}.
-    {% else %} {% endif %}{% else %} {% endif %}</p>
-    </div></section>
-</body>
+    {% else %} {% endif %}{% else %} {% endif %} 
+    {% if playlist_message %}
+    <br><i><br>{{playlist_message}}
+    </i>{% endif %} 
+</p><div class="form-group">
+    {% block content %}
+    <iframe src="https://open.spotify.com/embed/playlist/{{ playlist_id }}"  width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+   {% endblock %}</div>
+
+</div></div></div>
+</section><footer>
+    <a href="mailto:?subject=Try out Cadence!&body=Hi! Have you heard of this new app called Cadence? I love it! Go to Cadence.com now!" target=blank><img src="../static/images/envelope_PNG18360.png" alt="Share via email" style="width:20px;height:auto;"></a>
+    <a href="https://www.linkedin.com/in/maggierphunt/" target=blank><img src="../static/images/LI-In-Bug.png" alt="Reach out on Linkedin" style="width:20px;height:auto;"></a>
+    <a href="facebook.com" target=blank><img src="../static/images/facebook new logo white.png" alt="Share on Facebook" style="width:20px;height:auto;"></a>
+    <a href="instagram.com" target=blank><img src="../static/images/white-instagram-logo-vector-17.png" alt="Share on Instagram" style="width:20px;height:auto;"></a>
+    <a href="twitter.com" target=blank><img src="../static/images/Twitter_Social_Icon_Circle_White.png" alt="Tweet about Cadence!" style="width:20px;height:auto;"></a>       
+    <p>👣</p></footer></body>
 </html>

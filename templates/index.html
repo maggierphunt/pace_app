@@ -2,12 +2,12 @@
 <html>
 <head>
     <!-- title: CHANGE ME -->
-        <title>Home</title>
+        <title>👣 Cadence</title>
         
     <!-- stylesheets -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/stylesheet.css">
-    
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Abel" />
     <!-- scripts-->
     <script src="../static/js/script.js"></script>
     
@@ -18,101 +18,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Calculate the pace you need to run at, and generate a Spotify playlist to match it.">
     <meta name="keywords" content="python,HTML,CSS,javascript,Spotify,API,coding,programming">
-    
-    <div id="header"><h1>Cadence</h1>
-        <nav>
-        <ul>
-            <li class="current-page">
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/about">About</a>
-            </li>
-        </ul> 
-    </nav>
-    </div>
 </head>
-<body>
-    <section id="content-wrap"> 
-        <div class="content-wrap"><br> 
+<body>  
+    <section>
+        <div id="header" class="header"><h1>Cadence</h1>
+            <nav>
+            <ul>
+                <li class="current-page">
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul> 
+        </nav>
+        </div>
+<div> 
+<div class="content-wrap">
             <form form method="post" action="/results" onsubmit="return results()" id="user_input_form" enctype="multipart/form-data">
               <div class="form-group">
-<p>Enter your details here to generate your ideal bpm-tailored running playlist.</p>
+                <p>Enter your pace details from some past runs here, to generate your ideal bpm-tailored running playlist.<br><br>
+                  You will need to know, for each run, your average pace per kilometer (in minutes and seconds), and your average cadence, aka steps per minute (spm).<br><br>
+                If you can't work it out exactly, take the number of steps your run took, and divide that by the number of minutes you spent running! <br>E.g. 550 steps in 5 minutes 30 seconds, is 5500 steps ÷ 5.5 minutes =100 steps mer minute (spm)</p>
+                <h3>Calculator</h3>
 <div class="row">
-    <div class="col">First Sample Run</div>
+    <div class="col">Run #1</div>
     <div class="col">
-      <input type="number" id="pace_minutes1" name="pace_minutes1" class="form-control" placeholder="Pace (minutes)" required>
-      <label class="form-check-label" for="pace_minutes1">m</label>
+      <input type="number" id="pace_minutes1" name="pace_minutes1" class="form-control formInputs" placeholder="mins" min="0" max="60" required>
+      <label for="pace_minutes1">m</label>
     </div>
+    <div class="col"><p>and</p></div><div class="col">
+      <input type="number"  id="pace_seconds1" name="pace_seconds1" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
+      <label for="pace_seconds1">s</label>
+    </div><div class="col"><label>per km, at</label></div>
     <div class="col">
-      <input type="number"  id="pace_seconds1" name="pace_seconds1" class="form-control" placeholder="Pace (seconds)" required>
-      <label class="form-check-label" for="pace_seconds1">s</label>
-    </div>
-    <div class="col">
-      <input type="number"  id="cadence1" name="cadence1" class="form-control" placeholder="Cadence (steps per minute)" required>
-      <label class="form-check-label" for="cadence1">spm</label>
+      <input type="number"  id="cadence1" name="cadence1" class="form-control formInputs" placeholder="spm" min="0" max="500" required>
+      <label for="cadence1">spm</label>
     </div>
   </div>
   <div class="row">
-    <div class="col">Second Sample Run</div>
+    <div class="col">Run #2</div>
     <div class="col">
-        <input type="number" id="pace_minutes2" name="pace_minutes2" class="form-control" placeholder="Pace (minutes)" required>
-        <label class="form-check-label" for="pace_minutes2">m</label>
+        <input type="number" id="pace_minutes2" name="pace_minutes2" class="form-control formInputs" placeholder="mins" min="0" max="60" required>
+        <label for="pace_minutes2">m</label>
       </div>
+      <div class="col"><p>and</p></div><div class="col">
+        <input type="number"  id="pace_seconds2" name="pace_seconds2" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
+        <label for="pace_seconds2">s</label>
+      </div><div class="col"><label>per km, at</label></div>
       <div class="col">
-        <input type="number"  id="pace_seconds2" name="pace_seconds2" class="form-control" placeholder="Pace (seconds)" required>
-        <label class="form-check-label" for="pace_seconds2">s</label>
-      </div>
-      <div class="col">
-        <input type="number"  id="cadence2" name="cadence2" class="form-control" placeholder="Cadence (steps per minute)" required>
-        <label class="form-check-label" for="cadence2">spm</label>
+        <input type="number"  id="cadence2" name="cadence2" class="form-control formInputs" placeholder="spm" min="0" max="500" required>
+        <label for="cadence2">spm</label>
       </div>
     </div>
   <div class="row">
-    <div class="col">Third Sample Run</div>
+    <div class="col">Run #3</div>
     <div class="col">
-        <input type="number" id="pace_minutes3" name="pace_minutes3" class="form-control" placeholder="Pace (minutes)" required>
-        <label class="form-check-label" for="pace_minutes3">m</label>
+        <input type="number" id="pace_minutes3" name="pace_minutes3" class="form-control formInputs" placeholder="mins" min="0" max="60" required>
+        <label for="pace_minutes3">m</label>
       </div>
+      <div class="col"><p>and</p></div><div class="col">
+        <input type="number"  id="pace_seconds3" name="pace_seconds3" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
+        <label for="pace_seconds3">s</label>
+      </div><div class="col"><label>per km, at</label></div>
       <div class="col">
-        <input type="number"  id="pace_seconds3" name="pace_seconds3" class="form-control" placeholder="Pace (seconds)" required>
-        <label class="form-check-label" for="pace_seconds3">s</label>
-      </div>
-      <div class="col">
-        <input type="number"  id="cadence3" name="cadence3" class="form-control" placeholder="Cadence (steps per minute)" required>
-        <label class="form-check-label" for="cadence3">spm</label>
+        <input type="number"  id="cadence3" name="cadence3" class="form-control formInputs" placeholder="spm" min="0" max="500" required>
+        <label for="cadence3">spm</label>
       </div>
     </div>
   <div class="row">
-    <div class="col">Ideal Run</div>
+    <div class="col">Goal run</div>
     <div class="col">
-        <input type="number"  id="desired_distance" name="desired_distance" class="form-control" placeholder="Desired_distance (km)" required>
-        <label class="form-check-label" for="desired_distance">km</label>
+        <input type="number"  id="desired_distance" name="desired_distance" class="form-control formInputs" placeholder="kms" required>
+        <label for="desired_distance">km</label>
       </div>
-  </div>
-  <div class="row">
+      <div class="col"><p>in</p></div><div class="col">
+        <input type="number"  id="desired_time_hours" name="desired_time_hours" class="form-control formInputs" placeholder="hrs" min="0" max="24" required>
+        <label for="desired_time_hours">h</label>
+      </div>
       <div class="col">
-        <input type="number"  id="desired_time_hours" name="desired_time_hours" class="form-control" placeholder="Time (hours)" required>
-        <label class="form-check-label" for="desired_time_hours">h</label>
-      </div><div class="col">
-      <input type="number" id="desired_time_minutes" name="desired_time_minutes" class="form-control" placeholder="Time (minutes)" required>
-      <label class="form-check-label" for="desired_time_minutes">min</label>
+      <input type="number" id="desired_time_minutes" name="desired_time_minutes" class="form-control formInputs" placeholder="mins" min="0" max="60" required>
+      <label for="desired_time_minutes">m</label>
     </div>
     <div class="col">
-      <input type="number"  id="desired_time_seconds" name="desired_time_seconds" class="form-control" placeholder="Time (seconds)" required>
-      <label class="form-check-label" for="desired_time_seconds">secs</label>
+      <input type="number"  id="desired_time_seconds" name="desired_time_seconds" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
+      <label for="desired_time_seconds">s</label>
     </div>
     </div>
-<div class="row"><div class="form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1" required>I understand that my data will only be held for the purposes of this occasion.</label>
-  </div>
-  <div class="row">
-  <button type="submit" class="btn btn-primary">Submit</button></div>
-</div>
+<div class="row center-row">
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+    <label for="exampleCheck1">I understand that my data will only be held for the purposes of this calculation.</label>
+  </div><br></div>
+  <div class="row center-row">
+  <button type="submit" class="btn btn-dark">Submit</button></div></div></section>
 </form>
-  </div> 
-    </section>
-</div> 
+  </div> </div>
+</div>
+</div>
+<footer>
+  <a href="mailto:?subject=Try out Cadence!&body=Hi! Have you heard of this new app called Cadence? I love it! Go to Cadence.com now!" target=blank><img src="../static/images/envelope_PNG18360.png" alt="Share via email" style="width:20px;height:auto;"></a>
+  <a href="https://www.linkedin.com/in/maggierphunt/" target=blank><img src="../static/images/LI-In-Bug.png" alt="Reach out on Linkedin" style="width:20px;height:auto;"></a>
+  <a href="facebook.com" target=blank><img src="../static/images/facebook new logo white.png" alt="Share on Facebook" style="width:20px;height:auto;"></a>
+  <a href="instagram.com" target=blank><img src="../static/images/white-instagram-logo-vector-17.png" alt="Share on Instagram" style="width:20px;height:auto;"></a>
+  <a href="twitter.com" target=blank><img src="../static/images/Twitter_Social_Icon_Circle_White.png" alt="Tweet about Cadence!" style="width:20px;height:auto;"></a>       
+  <p>👣</p></footer>
 </body>
 </html>
