@@ -145,8 +145,4 @@ def results():
 
 #debug
 if __name__ == '__main__':
-<<<<<<< HEAD
     app.run(app.run(debug=True)) #runs the app. the debug part - unlocks debugging feature
-=======
-    app.run(app.run(debug=True)) #runs the app. the debug part - unlocks debugging feature
->>>>>>> 48263c14e6db9a6c3c6463d1cbf34ef6d0711c4f
