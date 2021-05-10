@@ -33,13 +33,19 @@
     </nav>
     </div>
 <div>
-   <div class="content-wrap">
+   <div class="content-wrap" >
             <p>Your results are here{% if stride %}  and your average pace length is {{stride}}m{% else %} {% endif %}.
     {% if bpm %} {% if km %}You need to run along to music running at {{bpm}}bpm to run {{km}}km in{% if hours != "0" %} {{hours}}h{% else %}{% endif %}{% if mins != "0" %} {{mins}}m{% else %}{% endif %}{% if seconds != "0" %} {{seconds}}s{% else %}{% endif %}.
-    {% else %} {% endif %}{% else %} {% endif %} {% if playlist_message}<br><i>{{playlist_message}}</i>{% endif %} </p>
+    {% else %} {% endif %}{% else %} {% endif %} 
+    {% if playlist_message %}
+    <br><i><br>{{playlist_message}}
+    </i>{% endif %} 
+</p><div class="form-group">
+    {% block content %}
+    <iframe src="https://open.spotify.com/embed/playlist/{{ playlist_id }}"  width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+   {% endblock %}</div>
 
-    <iframe src={{playlist_url}} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-    </div></div></div>
+</div></div></div>
 </section><footer>
     <a href="mailto:?subject=Try out Cadence!&body=Hi! Have you heard of this new app called Cadence? I love it! Go to Cadence.com now!" target=blank><img src="../static/images/envelope_PNG18360.png" alt="Share via email" style="width:20px;height:auto;"></a>
     <a href="https://www.linkedin.com/in/maggierphunt/" target=blank><img src="../static/images/LI-In-Bug.png" alt="Reach out on Linkedin" style="width:20px;height:auto;"></a>
