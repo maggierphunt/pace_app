@@ -111,7 +111,7 @@ def results():
     new_playlist= sp.user_playlist_create(user, name, public=True, collaborative=False, description=description)
     playlist_id=new_playlist['id']
     playlist_url=new_playlist['external_urls']['spotify']
-    
+    playlist_message = "Here's your playlist!"
     
     def list_tracks():
         library = sp.current_user_saved_tracks()
@@ -126,7 +126,7 @@ def results():
         print (list_tracks)
         return list_tracks()
     
-    playlist_message = "Here's your playlist!"
+    
     def fill_playlist():
         items_list_out=items_list
         sp.playlist_add_items(playlist_id, items_list_out, position=None)
@@ -137,8 +137,9 @@ def results():
         print("Playlist length in seconds: ", playlist_length)
         return fill_playlist()
     
-    #list_tracks()
-    #fill_playlist()
+    results()
+    list_tracks()
+    fill_playlist()
     return render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'], playlist_id=new_playlist['id'], playlist_message=playlist_message)
 
    # return sp.playlist_add_items(playlist_id, items)
