@@ -16,9 +16,7 @@ spotify_secret = os.getenv('SPOTIPY_CLIENT_SECRET', 'secret')
 spotify_redirect_uri = os.getenv('SPOTIPY_REDIRECT_URI', 'redirect_uri')
 spotify_api_url = os.getenv('api_url', 'api_url')
  
-auth_manager = SpotifyClientCredentials()
-
-
+#auth_manager = SpotifyClientCredentials()
 
 logger = logging.getLogger('examples.create_playlist')
 logging.basicConfig(level='DEBUG')
@@ -43,13 +41,16 @@ def home_page():
 
 #Results
 @app.route("/results", methods=["POST", "GET"])
+
+
 def results():
-    scope = "playlist-modify-public user-library-read"
+    scope = "playlist-modify-public user-library-read user-read-recently-played user-top-read"
     #sp = spotipy.Spotify(auth_manager=auth_manager(scope=scope))
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
     sp.trace = True
     user_id = sp.me()['id']
     playlist_items=[]
+    full_library_items=[]
     form_data = request.form
 
 #raw_input
@@ -91,7 +92,7 @@ def results():
     minute_pace = seconds_pace * 60
     bpm = round(minute_pace)
     print (bpm)
-    margin_of_error=bpm*0.1
+    margin_of_error=bpm*0.15
     #parser = argparse.ArgumentParser(description='Creates a playlist for user')
     
     #parser.add_argument('-p', '--playlist', required=False, default='Cadence Playlist', help='Name of Playlist')
@@ -115,13 +116,41 @@ def results():
     playlist_length=0
 
     new_playlist= sp.user_playlist_create(user, name, public=True, collaborative=False, description=description)
-    playlist_id=new_playlist['id']
-    playlist_url=new_playlist['external_urls']['spotify']
+    new_playlist_id=new_playlist['id']
+    #new_playlist_url=new_playlist['external_urls']['spotify']
     playlist_message = "Here's your playlist!"
-  
+    
+    playlists =sp.current_user_playlists(limit=50, offset=0)
+    for playlist in playlists['items']:
+        playlist_id=playlist['id']
+        playlist_tracks = sp.playlist_items(playlist_id,offset=0,fields='items.track.id,total', additional_types=['track'])
+        for playlist_track in playlist_tracks:
+            playlist_track_id=playlist_track['track']['id,total']
+            print(playlist_track_id)
+            full_library_items.append(playlist_track_id)
+
     library = sp.current_user_saved_tracks()
-    for item in (library['items']):
-        track_id = item['track']['id']
+    for library_track in (library['items']):
+            library_track_id=library_track['track']['id']
+            print(library_track_id)
+            full_library_items.append(library_track_id)
+
+    recents = sp.current_user_recently_played(limit=50, after=None, before=None)
+    for recent_track in (recents['items']):
+            recent_track_id=recent_track['track']['id']
+            print(recent_track_id)
+            full_library_items.append(recent_track_id)
+
+    tops = sp.current_user_top_tracks(limit=50, offset=0, time_range='medium_term')
+    for top_track in (tops['items']):
+            top_track_id=top_track['track']['id']
+            print(top_track_id)
+            full_library_items.append(top_track_id)
+    
+    set(full_library_items)
+
+    for i in full_library_items:
+        track_id = i
         track = sp.track(track_id, market=None)
         features = sp.audio_features(track_id)
         for feature in features:
@@ -143,17 +172,16 @@ def results():
             playlist_length=playlist_length+(track_duration*1000)
     playlist_items_list_out=playlist_items
     
-    sp.playlist_add_items(playlist_id, playlist_items_list_out, position=None)
+    sp.playlist_add_items(new_playlist_id, playlist_items_list_out, position=None)
     if playlist_length<desired_time_in_seconds:
         playlist_message = "On no! There is not enough music in your library to cover the whole run. You may have to put this playlist on repeat!"
     else:
         playlist_message = "What a great playlist - you have very good taste!"
     print("Playlist length in seconds: ", playlist_length)
     
-    return render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'], playlist_id=new_playlist['id'], playlist_message=playlist_message)
+    return render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'], new_playlist_id=new_playlist['id'], playlist_message=playlist_message)
 
-   # return sp.playlist_add_items(playlist_id, items)
-
+ 
 #debug
 if __name__ == '__main__':
     app.run(app.run(debug=True)) #runs the app. the debug part - unlocks debugging feature
