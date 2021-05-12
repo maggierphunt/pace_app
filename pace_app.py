@@ -6,6 +6,9 @@ import os
 from os import getenv
 import argparse
 import logging
+import json
+import time
+import sys
  
 #Spotify params
 spotify_client_id = os.getenv('SPOTIPY_CLIENT_ID', 'client_id')
@@ -14,13 +17,11 @@ spotify_redirect_uri = os.getenv('SPOTIPY_REDIRECT_URI', 'redirect_uri')
 spotify_api_url = os.getenv('api_url', 'api_url')
  
 auth_manager = SpotifyClientCredentials()
-sp = spotipy.Spotify(auth_manager=auth_manager)
-items=[]
- 
+
+
+
 logger = logging.getLogger('examples.create_playlist')
 logging.basicConfig(level='DEBUG')
- 
-
 
 
 #logger = logging.getLogger('examples.create_playlist')
@@ -43,7 +44,14 @@ def home_page():
 #Results
 @app.route("/results", methods=["POST", "GET"])
 def results():
+    scope = "playlist-modify-public user-library-read"
+    #sp = spotipy.Spotify(auth_manager=auth_manager(scope=scope))
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+    sp.trace = True
+    user_id = sp.me()['id']
+    playlist_items=[]
     form_data = request.form
+
 #raw_input
     pace_minutes1 = int(form_data['pace_minutes1'])
     pace_seconds1 = int(form_data['pace_seconds1'])
@@ -83,7 +91,7 @@ def results():
     minute_pace = seconds_pace * 60
     bpm = round(minute_pace)
     print (bpm)
-
+    margin_of_error=bpm*0.1
     #parser = argparse.ArgumentParser(description='Creates a playlist for user')
     
     #parser.add_argument('-p', '--playlist', required=False, default='Cadence Playlist', help='Name of Playlist')
@@ -91,9 +99,7 @@ def results():
     #args = parser.parse_args()
     
     #make playlist
-    scope = "playlist-modify-public user-library-read"
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
-    user_id = sp.me()['id']
+    
     playlist_name="Cadence Playlist"
     playlist_description="Made for you by the Cadence App, to run {distance}km in {h}h{m}m{s}s. Keep to the beat!".format(
         distance = desired_distance,
@@ -112,34 +118,38 @@ def results():
     playlist_id=new_playlist['id']
     playlist_url=new_playlist['external_urls']['spotify']
     playlist_message = "Here's your playlist!"
+  
+    library = sp.current_user_saved_tracks()
+    for item in (library['items']):
+        track_id = item['track']['id']
+        track = sp.track(track_id, market=None)
+        features = sp.audio_features(track_id)
+        for feature in features:
+            analysis= sp._get(feature['analysis_url'])
+            #print(json.dumps(analysis, indent=1))
+            tempo=analysis['track']['tempo']
+            track_duration=track['duration_ms']
+            track_name=track['name']
+            print("name")
+            print(track_name)
+            print("tempo")
+            print(tempo)
+            print("duration")
+            print(track_duration)
+            tempo=int(tempo)
+            track_duration=int(track_duration)
+        if playlist_length<desired_time_in_seconds and tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error):
+            playlist_items.append(track_id)
+            playlist_length=playlist_length+(track_duration*1000)
+    playlist_items_list_out=playlist_items
     
-    def list_tracks():
-        library = sp.current_user_saved_tracks()
-        for idx, item in enumerate(library['items']):
-            track = item['track']
-            print(idx, track['artists'][0]['name'], " – ", track['name'], track['tempo'])
-            margin_of_error=bpm*0.1
-            if playlist_length<desired_time_in_seconds and item['tempo']<(bpm+margin_of_error) and item['tempo']>(bpm-margin_of_error):
-                items_list.append(idx)
-                playlist_length=playlist_length+(track[duration_ms]*1000)
-        items_list_out=items_list
-        print (list_tracks)
-        return list_tracks()
+    sp.playlist_add_items(playlist_id, playlist_items_list_out, position=None)
+    if playlist_length<desired_time_in_seconds:
+        playlist_message = "On no! There is not enough music in your library to cover the whole run. You may have to put this playlist on repeat!"
+    else:
+        playlist_message = "What a great playlist - you have very good taste!"
+    print("Playlist length in seconds: ", playlist_length)
     
-    
-    def fill_playlist():
-        items_list_out=items_list
-        sp.playlist_add_items(playlist_id, items_list_out, position=None)
-        if playlist_length<desired_time_in_seconds:
-            playlist_message = "On no! There is not enough music in your library to cover the whole run. You may have to put this playlist on repeat!"
-        else:
-            playlist_message = "What a great playlist - you have very good taste!"
-        print("Playlist length in seconds: ", playlist_length)
-        return fill_playlist()
-    
-    results()
-    list_tracks()
-    fill_playlist()
     return render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'], playlist_id=new_playlist['id'], playlist_message=playlist_message)
 
    # return sp.playlist_add_items(playlist_id, items)
