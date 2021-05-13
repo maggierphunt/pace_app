@@ -57,14 +57,20 @@ def results():
     pace_minutes1 = int(form_data['pace_minutes1'])
     pace_seconds1 = int(form_data['pace_seconds1'])
     cadence1 = int(form_data['cadence1'])
+    distance1 = int(form_data['distance1'])
+    steps1 = int(form_data['steps1'])
 
     pace_minutes2 = int(form_data['pace_minutes2'])
     pace_seconds2 = int(form_data['pace_seconds2'])
     cadence2 = int(form_data['cadence2'])
+    distance2 = int(form_data['distance2'])
+    steps2 = int(form_data['steps2'])
 
     pace_minutes3 = int(form_data['pace_minutes3'])
     pace_seconds3 = int(form_data['pace_seconds3'])
     cadence3 = int(form_data['cadence3'])
+    distance3 = int(form_data['distance3'])
+    steps3 = int(form_data['steps3'])
 
     desired_distance = int(form_data['desired_distance'])
     desired_time_hours = int(form_data['desired_time_hours'])
@@ -79,9 +85,18 @@ def results():
     distance_in_a_minute_2 = 1/km_pace_2*60
     distance_in_a_minute_3 = 1/km_pace_3*60
 #steplength
-    step_length_1 = distance_in_a_minute_1 / cadence1
-    step_length_2 = distance_in_a_minute_2 / cadence2
-    step_length_3 = distance_in_a_minute_3 / cadence3
+    if cadence1>0:
+        step_length_1 = distance_in_a_minute_1 / cadence1
+    else:
+        step_length_1 = distance1 / steps1
+    if cadence2>0:
+        step_length_2 = distance_in_a_minute_2 / cadence2    
+    else:
+        step_length_2 = distance2 / steps2
+    if cadence3>0:
+        step_length_3 = distance_in_a_minute_3 / cadence3
+    else:
+        step_length_3 = distance3 / steps3
     average_step_length = (step_length_1+step_length_2+step_length_3)/3
     print (average_step_length)
     stride_in_metres = round(average_step_length*1000,2)
@@ -129,7 +144,7 @@ def results():
             print(playlist_track_id)
             full_library_items.append(playlist_track_id)
 
-    library = sp.current_user_saved_tracks()
+    library = sp.current_user_saved_tracks(limit=50, offset=0, market=None)
     for library_track in (library['items']):
             library_track_id=library_track['track']['id']
             print(library_track_id)
