@@ -170,6 +170,54 @@ def results():
         if playlist_length<desired_time_in_seconds and tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error):
             playlist_items.append(track_id)
             playlist_length=playlist_length+(track_duration*1000)
+
+    library = sp.current_user_recently_played(limit=50, after=None, before=None)
+    for item in (library['items']):
+        track_id = item['track']['id']
+        track = sp.track(track_id, market=None)
+        features = sp.audio_features(track_id)
+        for feature in features:
+            analysis= sp._get(feature['analysis_url'])
+            #print(json.dumps(analysis, indent=1))
+            tempo=analysis['track']['tempo']
+            track_duration=track['duration_ms']
+            track_name=track['name']
+            print("name")
+            print(track_name)
+            print("tempo")
+            print(tempo)
+            print("duration")
+            print(track_duration)
+            tempo=int(tempo)
+            track_duration=int(track_duration)
+        if playlist_length<desired_time_in_seconds and tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error):
+            playlist_items.append(track_id)
+            playlist_length=playlist_length+(track_duration*1000)
+
+    library = sp.current_user_top_tracks(limit=50, offset=0, time_range='medium_term')
+    for item in (library['items']):
+        track_id = item['track']['id']
+        track = sp.track(track_id, market=None)
+        features = sp.audio_features(track_id)
+        for feature in features:
+            analysis= sp._get(feature['analysis_url'])
+            #print(json.dumps(analysis, indent=1))
+            tempo=analysis['track']['tempo']
+            track_duration=track['duration_ms']
+            track_name=track['name']
+            print("name")
+            print(track_name)
+            print("tempo")
+            print(tempo)
+            print("duration")
+            print(track_duration)
+            tempo=int(tempo)
+            track_duration=int(track_duration)
+        if playlist_length<desired_time_in_seconds and tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error):
+            playlist_items.append(track_id)
+            playlist_length=playlist_length+(track_duration*1000)
+
+
     playlist_items_list_out=playlist_items
     
     sp.playlist_add_items(new_playlist_id, playlist_items_list_out, position=None)
