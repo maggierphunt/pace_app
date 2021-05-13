@@ -8,15 +8,19 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 20px;
     font-family: Abel;
     color: white;
+    margin-bottom: 120px;
+    
 }
 
 
+.textbox
+{display: inline;
+    font-size: 14px}
 /*header and footer*/
 #header {
     height: 120px;
@@ -38,7 +42,7 @@
 }
 
 footer {
-    height: 20px;
+    height: 120px;
     width: 100%;
     background-color: black;
     color: greenyellow;
@@ -71,6 +75,7 @@ body {
 }
 
 .leftImage {
+
     float: left;
     padding-right: 10px;
     padding-bottom: 10px;
@@ -109,6 +114,46 @@ nav{
 
 }
 
+p { display: inline;}
+
+a{
+    display: inline;
+    color: greenyellow;
+    list-style: none;
+    
+}
+
+p a{
+    
+    color: greenyellow;
+    float: left;
+    width: 50%;
+    padding: 0;
+    margin: 0
+    display: inline;
+}
+
+a:hover {
+    color: grey;
+    text-decoration: none;  
+    display: inline;
+      
+  }
+
+p a:hover:before {
+    content: '👣';
+    display: inline-block;
+    display: inline;
+
+    position: absolute;
+    bottom: -0.8em;
+    left: 0;
+
+    text-align: center;
+    font-size: 10px;
+    width: 100%;
+
+}
 
 li{
     list-style-type: none;
@@ -122,16 +167,17 @@ li{
   ul li a
   {display: inline-block;
     position: relative;
-    display: block;
+    text-decoration: none;  
+    
   }
 
 li a:visited {
-    color: grey;
-      text-decoration: none;
+    color: greenyellow;
+    text-decoration: none;  
   }
   li .current-page a:visited {
     color: greenyellow;
-      text-decoration: none;
+    text-decoration: none;
   }
 
   li .current-page a:active {
@@ -176,7 +222,25 @@ ul li a:hover:before {
 
 }
 
+footer ul li a
+{display: inline-block;
+  position: relative;
+  
+}
 
+footer ul li a:hover:before {
+    content: '👣';
+    display: inline-block;
+
+    position: absolute;
+    bottom: -2em;
+    left: 0;
+
+    text-align: center;
+    font-size: 10px;
+    width: 100%;
+
+}
 
 h1 { font-family: Abel; font-size: 24px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 26.4px; }
 h3 { font-family: Abel; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; }
