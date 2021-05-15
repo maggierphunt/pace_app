@@ -5,9 +5,6 @@ function yesnoCheck(that) {
         document.getElementById("ifDistance1").style.display = "block";
         document.getElementById("ifDistance2").style.display = "block";
         document.getElementById("ifDistance3").style.display = "block";
-        document.getElementById("running1").style.display = "block";
-        document.getElementById("running2").style.display = "block";
-        document.getElementById("running3").style.display = "block";
         document.getElementById("ifDSteps1").style.display = "block";
         document.getElementById("ifDSteps2").style.display = "block";
         document.getElementById("ifDSteps3").style.display = "block";
@@ -32,9 +29,6 @@ function yesnoCheck(that) {
         document.getElementById("ifDistance1").style.display = "none";
         document.getElementById("ifDistance2").style.display = "none";
         document.getElementById("ifDistance3").style.display = "none";
-        document.getElementById("running1").style.display = "none";
-        document.getElementById("running2").style.display = "none";
-        document.getElementById("running3").style.display = "none";
 
 }
 
