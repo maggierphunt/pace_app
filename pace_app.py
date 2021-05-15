@@ -107,7 +107,9 @@ def results():
     minute_pace = seconds_pace * 60
     bpm = round(minute_pace)
     print (bpm)
+
     margin_of_error=bpm*0.05
+
     #parser = argparse.ArgumentParser(description='Creates a playlist for user')
     
     #parser.add_argument('-p', '--playlist', required=False, default='Cadence Playlist', help='Name of Playlist')
@@ -134,6 +136,7 @@ def results():
     new_playlist_id=new_playlist['id']
     #new_playlist_url=new_playlist['external_urls']['spotify']
     playlist_message = "Here's your playlist!"
+
     
     playlists =sp.current_user_playlists(limit=50, offset=0)
     for playlist in playlists['items']:
@@ -220,6 +223,7 @@ def results():
             playlist_length=playlist_length+(track_duration*1000)
 
     library = sp.current_user_top_tracks(limit=50, offset=0, time_range='medium_term')
+
     for item in (library['items']):
         track_id = item['track']['id']
         track = sp.track(track_id, market=None)
@@ -230,6 +234,7 @@ def results():
             tempo=analysis['track']['tempo']
             track_duration=track['duration_ms']
             track_name=track['name']
+            track_count=track_count+1
             print("name")
             print(track_name)
             print("tempo")
@@ -250,9 +255,12 @@ def results():
         playlist_message = "On no! There is not enough music in your library to cover the whole run. You may have to put this playlist on repeat!"
     else:
         playlist_message = "What a great playlist - you have very good taste!"
-    print("Playlist length in seconds: ", playlist_length)
+  
+    print("Playlist length in minutes: ", playlist_length/1000/60)
+    print(track_count, "tracks checked")
     
     return render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'], new_playlist_id=new_playlist['id'], playlist_message=playlist_message)
+
 
  
 #debug

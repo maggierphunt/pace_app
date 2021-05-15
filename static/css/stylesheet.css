@@ -238,6 +238,7 @@ footer ul li a
   
 }
 
+
 footer ul li a:hover:before {
     content: '👣';
     display: inline-block;
@@ -249,6 +250,7 @@ footer ul li a:hover:before {
     text-align: center;
     font-size: 10px;
     width: 100%;
+
 
 }
 
@@ -271,6 +273,8 @@ pre { font-family: Abel; font-size: 13px; font-style: normal; font-variant: norm
 
 form {
     align-self: center;
+    text-align: left;
+
 }
 
 
@@ -339,7 +343,7 @@ label {
 
     #content-wrap {
         padding-top: 60px; /*header height */
-        padding-bottom: 20px;    /* Footer height */
+        padding-bottom: 0px;    /* Footer height */
     }
 
     ul{
