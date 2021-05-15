@@ -17,7 +17,16 @@
     
 }
 
-
+ /* Specilly used for Firefox */
+ input[type=number] {
+    -moz-appearance: textfield;
+  }
+   /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
 .textbox
 {display: inline;
@@ -43,7 +52,7 @@
 }
 
 footer {
-    height: 120px;
+    height: 60px;
     width: 100%;
     background-color: black;
     color: greenyellow;
@@ -229,6 +238,7 @@ footer ul li a
   
 }
 
+
 footer ul li a:hover:before {
     content: '👣';
     display: inline-block;
@@ -240,6 +250,7 @@ footer ul li a:hover:before {
     text-align: center;
     font-size: 10px;
     width: 100%;
+
 
 }
 
@@ -293,6 +304,16 @@ form {
     margin-right: 0px;
   }
 
+  .formInputs2{
+    width: 140px;
+    float: left;
+    text-align: right;
+    height: 20px;
+    margin-right: 0px;
+    font-size: 12px;
+  }
+
+
 label {
     text-align: left;
     display: inline-block;
@@ -339,7 +360,7 @@ label {
 
     .form-group{
         width: 450px;
-        font-size: 10px;
+        font-size: 8px;
     }
 
     .formInputs{
