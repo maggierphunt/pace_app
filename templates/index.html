@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Abel" />
     <!-- scripts-->
     <script src="../static/js/script.js"></script>
+    <script src="../static/js/formscript.js"></script>
     
     <!-- meta -->
     <meta name="author" content="Maggie Hunt">
@@ -44,7 +45,7 @@ Please select which you can provide from the dropdown.</p>
     <option value="DistanceAndSteps">Distance and Steps</option>
   </select>
 </div><br>
-  <form form method="post" action="/results" onsubmit="return results()" id="user_input_form" enctype="multipart/form-data">
+  <form id="user_input_form" method="post" action="/results" onsubmit="return results()" enctype="multipart/form-data">
     
     <div class="form-group"></div>
                 
@@ -66,7 +67,7 @@ Please select which you can provide from the dropdown.</p>
       <label for="cadence1">spm</label>
     </div>
     <div class="col" id="ifDistance1">
-      <input type="number"  id="distance1" name="distance1" class="form-control formInputs" placeholder="km" min="0" max="500" required>
+      <input type="number" step="any" id="distance1" name="distance1" class="form-control formInputs" placeholder="km" min="0" max="500" required>
       <label for="distance1">km</label>
     </div>
     <div class="col" id="ifDSteps1">
@@ -89,7 +90,7 @@ Please select which you can provide from the dropdown.</p>
         <label for="cadence2">spm</label>
       </div>
       <div class="col" id="ifDistance2">
-        <input type="number"  id="distance2" name="distance2" class="form-control formInputs" placeholder="km" min="0" max="500" required>
+        <input type="number" step="any" id="distance2" name="distance2" class="form-control formInputs" placeholder="km" min="0" max="500" required>
         <label for="distance2">km</label>
       </div>
       <div class="col" id="ifDSteps2">
@@ -112,7 +113,7 @@ Please select which you can provide from the dropdown.</p>
         <label for="cadence3">spm</label>
       </div>
       <div class="col" id="ifDistance3">
-        <input type="number"  id="distance3" name="distance3" class="form-control formInputs" placeholder="km" min="0" max="500" required>
+        <input type="number" step="any" id="distance3" name="distance3" class="form-control formInputs" placeholder="km" min="0" max="500" required>
         <label for="distance3">km</label>
       </div>
       <div class="col" id="ifDSteps3">
