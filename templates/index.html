@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Abel" />
     <!-- scripts-->
    <script src="../static/js/script.js"></script>
-    <script src="../static/js/formscript.js"></script>
+    <!-- <script src="../static/js/formscript.js"></script>-->
     
     <!-- meta -->
     <meta name="author" content="Maggie Hunt">
@@ -20,7 +20,7 @@
     <meta name="description" content="Calculate the pace you need to run at, and generate a Spotify playlist to match it.">
     <meta name="keywords" content="python,HTML,CSS,javascript,Spotify,API,coding,programming">
 </head>
-<body onload="hideonLoad();">  
+<body onload="onLoadHide()">  
     <section>
         <div id="header" class="header"><h1>Cadence</h1>
             <nav>
@@ -41,13 +41,13 @@ Please select which you can provide from the dropdown.</p>
 
 <div class="row  center-row">
   <select class="form-control form-control-sm formInputs2" id="CadenceorNot" onchange="yesnoCheck(this);">
-    <option selected value="Cadence">Cadence</option>
+    <option value="Cadence">Cadence</option>
     <option value="DistanceAndSteps">Distance and Steps</option>
   </select>
 </div><br>
   <form id="user_input_form" method="post" action="/results" onsubmit="return results()" enctype="multipart/form-data">
     
-    <div class="form-group"></div>
+    <div class="form-group">
                 
     
       <h3>Calculator</h3><br>
@@ -55,25 +55,25 @@ Please select which you can provide from the dropdown.</p>
     <div class="row">
     <div class="col">Run #1</div>
     <div class="col" id="ifDistance1">
-      <input type="number" step="any" id="distance1" name="distance1" class="form-control formInputs" placeholder="km" min="0" max="500" required>
+      <input type="number" step="any" id="distance1" name="distance1" class="form-control formInputs" placeholder="km" value="0" min="0" max="500">
       <label for="distance1">km</label>
     </div>
     <div class="col" id="ifDSteps1">
-      <input type="number"  id="steps1" name="steps1" class="form-control formInputs" placeholder="steps" min="0" max="5000000" required>
+      <input type="number"  id="steps1" name="steps1" class="form-control formInputs" placeholder="steps" value="0" min="0" max="5000000">
       <label for="steps1">steps</label>
     </div>
     <div class="col">
-      <input type="number" id="pace_minutes1" name="pace_minutes1" class="form-control formInputs" placeholder="mins" min="0" max="60" required>
+      <input type="number" id="pace_minutes1" name="pace_minutes1" class="form-control formInputs" placeholder="mins" value="0" min="0" max="60">
       <label for="pace_minutes1">m</label>
     </div>
     <div class="col">
-      <input type="number"  id="pace_seconds1" name="pace_seconds1" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
+      <input type="number"  id="pace_seconds1" name="pace_seconds1" class="form-control formInputs" placeholder="secs" value="0" min="0" max="60">
       <label for="pace_seconds1">s</label>
     </div>
     <div class="col"><label>km pace</label></div>
     <div class="col" id="perkm1"><label>at</label></div>
     <div class="col" id="ifCadence1">
-      <input type="number"  id="cadence1" name="cadence1" class="form-control formInputs" placeholder="spm" min="0" max="500" required>
+      <input type="number"  id="cadence1" name="cadence1" class="form-control formInputs" placeholder="spm" value="0" min="0" max="500">
       <label for="cadence1">spm</label>
     </div>
 
@@ -81,25 +81,25 @@ Please select which you can provide from the dropdown.</p>
   <div class="row">
     <div class="col">Run #2</div>
     <div class="col" id="ifDistance2">
-      <input type="number" step="any" id="distance2" name="distance2" class="form-control formInputs" placeholder="km" min="0" max="500" required>
+      <input type="number" step="any" id="distance2" name="distance2" class="form-control formInputs" placeholder="km" value="0" min="0" max="500">
       <label for="distance2">km</label>
     </div>
     <div class="col" id="ifDSteps2">
-      <input type="number"  id="steps2" name="steps2" class="form-control formInputs" placeholder="steps" min="0" max="5000000" required>
+      <input type="number"  id="steps2" name="steps2" class="form-control formInputs" placeholder="steps" value="0" min="0" max="5000000">
       <label for="steps2">steps</label>
     </div>
     <div class="col">
-        <input type="number" id="pace_minutes2" name="pace_minutes2" class="form-control formInputs" placeholder="mins" min="0" max="60" required>
+        <input type="number" id="pace_minutes2" name="pace_minutes2" class="form-control formInputs" placeholder="mins" value="0" min="0" max="60">
         <label for="pace_minutes2">m</label>
       </div>
       <div class="col">
-        <input type="number"  id="pace_seconds2" name="pace_seconds2" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
+        <input type="number"  id="pace_seconds2" name="pace_seconds2" class="form-control formInputs" placeholder="secs" value="0" min="0" max="60">
         <label for="pace_seconds2">s</label></div>
         <div class="col"><label>km pace</label></div>
     
         <div class="col" id="perkm2"><label>at</label></div>
       <div class="col" id="ifCadence2">
-        <input type="number"  id="cadence2" name="cadence2" class="form-control formInputs" placeholder="spm" min="0" max="500" required>
+        <input type="number"  id="cadence2" name="cadence2" class="form-control formInputs" placeholder="spm" value="0" min="0" max="500">
         <label for="cadence2">spm</label>
       </div>
  
@@ -107,25 +107,25 @@ Please select which you can provide from the dropdown.</p>
   <div class="row">
     <div class="col">Run #3</div>
     <div class="col" id="ifDistance3">
-      <input type="number" step="any" id="distance3" name="distance3" class="form-control formInputs" placeholder="km" min="0" max="500" required>
+      <input type="number" step="any" id="distance3" name="distance3" class="form-control formInputs" placeholder="km" value="0" min="0" max="500">
       <label for="distance3">km</label>
     </div>
     <div class="col" id="ifDSteps3">
-      <input type="number"  id="steps3" name="steps3" class="form-control formInputs" placeholder="steps" min="0" max="5000000" required>
+      <input type="number"  id="steps3" name="steps3" class="form-control formInputs" placeholder="steps" value="0" min="0" max="5000000">
       <label for="steps3">steps</label>
     </div>
     <div class="col">
-        <input type="number" id="pace_minutes3" name="pace_minutes3" class="form-control formInputs" placeholder="mins" min="0" max="60" required>
+        <input type="number" id="pace_minutes3" name="pace_minutes3" class="form-control formInputs" placeholder="mins" value="0" min="0" max="60">
         <label for="pace_minutes3">m</label>
       </div>
       <div class="col">
-        <input type="number"  id="pace_seconds3" name="pace_seconds3" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
+        <input type="number"  id="pace_seconds3" name="pace_seconds3" class="form-control formInputs" placeholder="secs" value="0" min="0" max="60">
         <label for="pace_seconds3">s</label>
       </div>
       <div class="col"><label>km pace</label></div>
       <div class="col" id="perkm3"><label>at</label></div>
       <div class="col" id="ifCadence3">
-        <input type="number"  id="cadence3" name="cadence3" class="form-control formInputs" placeholder="spm" min="0" max="500" required>
+        <input type="number"  id="cadence3" name="cadence3" class="form-control formInputs" placeholder="spm" value="0" min="0" max="500">
         <label for="cadence3">spm</label>
       </div>
 
@@ -137,15 +137,15 @@ Please select which you can provide from the dropdown.</p>
         <label for="desired_distance">km</label>
       </div>
       <div class="col"><p>in</p></div><div class="col">
-        <input type="number"  id="desired_time_hours" name="desired_time_hours" class="form-control formInputs" placeholder="hrs" min="0" max="24" required>
+        <input type="number"  id="desired_time_hours" name="desired_time_hours" class="form-control formInputs" placeholder="hrs" value="0" min="0" max="24" required>
         <label for="desired_time_hours">h</label>
       </div>
       <div class="col">
-      <input type="number" id="desired_time_minutes" name="desired_time_minutes" class="form-control formInputs" placeholder="mins" min="0" max="60" required>
+      <input type="number" id="desired_time_minutes" name="desired_time_minutes" class="form-control formInputs" placeholder="mins" value="0" min="0" max="60" required>
       <label for="desired_time_minutes">m</label>
     </div>
     <div class="col">
-      <input type="number"  id="desired_time_seconds" name="desired_time_seconds" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
+      <input type="number"  id="desired_time_seconds" name="desired_time_seconds" class="form-control formInputs" placeholder="secs" value="0" min="0" max="60" required>
       <label for="desired_time_seconds">s</label>
     </div>
     </div>
@@ -155,7 +155,7 @@ Please select which you can provide from the dropdown.</p>
     <label for="exampleCheck1">I understand that my data will only be held for the purposes of this calculation.</label>
   </div><br></div>
   <div class="row center-row">
-  <button type="submit" class="btn btn-dark">Submit</button></div></div></section>
+  <button type="submit" id="submit-button-user_input_form" class="btn btn-dark" form="user_input_form">Submit</button></div></div></section>
 </form>
   </div> </div>
 </div>
