@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="../static/css/stylesheet.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Abel" />
     <!-- scripts-->
-    <script src="../static/js/script.js"></script>
-    <script src="../static/js/formscript.js"></script>
+    <!-- <script src="../static/js/script.js"></script>
+    <script src="../static/js/formscript.js"></script> -->
+    
     <!-- meta -->
     <meta name="author" content="Maggie Hunt">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,7 @@
     <meta name="description" content="Calculate the pace you need to run at, and generate a Spotify playlist to match it.">
     <meta name="keywords" content="python,HTML,CSS,javascript,Spotify,API,coding,programming">
 </head>
-<body>  
+<body onload="hideonLoad();">  
     <section>
         <div id="header" class="header"><h1>Cadence</h1>
             <nav>
@@ -34,14 +35,24 @@
         </nav>
         </div>
 <div> 
-<div class="content-wrap">
-            <form form method="post" action="/results" onsubmit="return results()" id="user_input_form" enctype="multipart/form-data">
-              <div class="form-group">
-                <p>Enter your pace details from some past runs here, to generate your ideal bpm-tailored running playlist.<br><br>
-                  You will need to know, for each run, your average pace per kilometer (in minutes and seconds), and your average cadence, aka steps per minute (spm).<br><br>
-                If you can't work it out exactly, take the number of steps your run took, and divide that by the number of minutes you spent running! <br>E.g. 550 steps in 5 minutes 30 seconds, is 5500 steps ÷ 5.5 minutes =100 steps mer minute (spm)</p>
-                <h3>Calculator</h3>
-<div class="row">
+<div class="content-wrap"><p>Enter your pace details from some past runs here, to generate your ideal bpm-tailored running playlist.<br><br>
+  You will need to know, for each run, your average pace per kilometer (in minutes and seconds), and your average cadence, aka steps per minute (spm), or your distance and the step count for that run.<br><br>
+Please select which you can provide from the dropdown.</p>
+
+<div class="row  center-row">
+  <select class="form-control form-control-sm formInputs2" id="CadenceorNot" onchange="yesnoCheck(this);">
+    <option selected value="Cadence">Cadence</option>
+    <option value="DistanceAndSteps">Distance and Steps</option>
+  </select>
+</div><br>
+  <form id="user_input_form" method="post" action="/results" onsubmit="return results()" enctype="multipart/form-data">
+    
+    <div class="form-group"></div>
+                
+    
+      <h3>Calculator</h3><br>
+      
+    <div class="row">
     <div class="col">Run #1</div>
     <div class="col">
       <input type="number" id="pace_minutes1" name="pace_minutes1" class="form-control formInputs" placeholder="mins" min="0" max="60" required>
@@ -50,10 +61,18 @@
     <div class="col"><p>and</p></div><div class="col">
       <input type="number"  id="pace_seconds1" name="pace_seconds1" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
       <label for="pace_seconds1">s</label>
-    </div><div class="col"><label>per km, at</label></div>
-    <div class="col">
+    </div><div class="col" id="perkm1"><label>per km, at</label></div>
+    <div class="col" id="ifCadence1">
       <input type="number"  id="cadence1" name="cadence1" class="form-control formInputs" placeholder="spm" min="0" max="500" required>
       <label for="cadence1">spm</label>
+    </div>
+    <div class="col" id="ifDistance1">
+      <input type="number" step="any" id="distance1" name="distance1" class="form-control formInputs" placeholder="km" min="0" max="500" required>
+      <label for="distance1">km</label>
+    </div>
+    <div class="col" id="ifDSteps1">
+      <input type="number"  id="steps1" name="steps1" class="form-control formInputs" placeholder="steps" min="0" max="5000000" required>
+      <label for="steps1">steps</label>
     </div>
   </div>
   <div class="row">
@@ -65,10 +84,18 @@
       <div class="col"><p>and</p></div><div class="col">
         <input type="number"  id="pace_seconds2" name="pace_seconds2" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
         <label for="pace_seconds2">s</label>
-      </div><div class="col"><label>per km, at</label></div>
-      <div class="col">
+      </div><div class="col" id="perkm2"><label>per km, at</label></div>
+      <div class="col" id="ifCadence2">
         <input type="number"  id="cadence2" name="cadence2" class="form-control formInputs" placeholder="spm" min="0" max="500" required>
         <label for="cadence2">spm</label>
+      </div>
+      <div class="col" id="ifDistance2">
+        <input type="number" step="any" id="distance2" name="distance2" class="form-control formInputs" placeholder="km" min="0" max="500" required>
+        <label for="distance2">km</label>
+      </div>
+      <div class="col" id="ifDSteps2">
+        <input type="number"  id="steps2" name="steps2" class="form-control formInputs" placeholder="steps" min="0" max="5000000" required>
+        <label for="steps2">steps</label>
       </div>
     </div>
   <div class="row">
@@ -80,12 +107,20 @@
       <div class="col"><p>and</p></div><div class="col">
         <input type="number"  id="pace_seconds3" name="pace_seconds3" class="form-control formInputs" placeholder="secs" min="0" max="60" required>
         <label for="pace_seconds3">s</label>
-      </div><div class="col"><label>per km, at</label></div>
-      <div class="col">
+      </div><div class="col" id="perkm3"><label>per km, at</label></div>
+      <div class="col" id="ifCadence3">
         <input type="number"  id="cadence3" name="cadence3" class="form-control formInputs" placeholder="spm" min="0" max="500" required>
         <label for="cadence3">spm</label>
       </div>
-    </div>
+      <div class="col" id="ifDistance3">
+        <input type="number" step="any" id="distance3" name="distance3" class="form-control formInputs" placeholder="km" min="0" max="500" required>
+        <label for="distance3">km</label>
+      </div>
+      <div class="col" id="ifDSteps3">
+        <input type="number"  id="steps3" name="steps3" class="form-control formInputs" placeholder="steps" min="0" max="5000000" required>
+        <label for="steps3">steps</label>
+      </div>
+    </div><div class="row"></div>
   <div class="row">
     <div class="col">Goal run</div>
     <div class="col">
