@@ -30,17 +30,17 @@ logging.basicConfig(level='DEBUG')
 app = Flask("pace_app") #making an app
        
 #About
-@app.route("/about", methods=["POST", "GET"])    
+@app.route("/about")    
 def about_page():
         return render_template("about.html")
 
 #Homepage
-@app.route("/", methods=["POST", "GET"])
+@app.route("/")
 def home_page():
         return render_template("index.html")
 
 #Results
-@app.route("/results", methods=["POST", "GET"])
+@app.route("/results", methods=["POST"])
 
 
 def results():
@@ -107,7 +107,7 @@ def results():
     minute_pace = seconds_pace * 60
     bpm = round(minute_pace)
     print (bpm)
-    margin_of_error=bpm*0.15
+    margin_of_error=bpm*0.05
     #parser = argparse.ArgumentParser(description='Creates a playlist for user')
     
     #parser.add_argument('-p', '--playlist', required=False, default='Cadence Playlist', help='Name of Playlist')
@@ -182,9 +182,19 @@ def results():
             print(track_duration)
             tempo=int(tempo)
             track_duration=int(track_duration)
-        if playlist_length<desired_time_in_seconds and tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error):
-            playlist_items.append(track_id)
-            playlist_length=playlist_length+(track_duration*1000)
+        while playlist_length<desired_time_in_seconds:
+            if tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error):
+                playlist_items.append(track_id)
+                playlist_length=playlist_length+(track_duration*1000)
+            elif tempo<(bpm+margin_of_error)*0.5 and tempo>(bpm-margin_of_error)*0.5:
+                playlist_items.append(track_id)
+                playlist_length=playlist_length+(track_duration*1000)
+            elif tempo<(bpm+margin_of_error)*2 and tempo>(bpm-margin_of_error)*2:
+                playlist_items.append(track_id)
+                playlist_length=playlist_length+(track_duration*1000)
+            else:   
+                print("BPM incompatible - ", bpm)
+
 
     library = sp.current_user_recently_played(limit=50, after=None, before=None)
     for item in (library['items']):
