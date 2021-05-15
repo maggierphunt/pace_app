@@ -64,7 +64,6 @@ footer {
 
 body {
     background-image: url(../images/pexels-daniel-reche-3601094.jpg);
-    background-filter: grayscale(1);
     background-repeat: no-repeat;
     background-size: cover;
     font-family: Abel;
@@ -130,7 +129,7 @@ p a{
     float: left;
     width: 50%;
     padding: 0;
-    margin: 0
+    margin: 0;
     display: inline;
 }
 
@@ -303,7 +302,7 @@ label {
 }
 
 /*for small screens*/
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
     
     #header {
         height: 100px;
@@ -314,14 +313,14 @@ label {
     }
 
     #footer {
-        height: 15px;
+        height: 5px;
         font-size: small;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
     }
 
     #content-wrap {
-        padding-top: 60px; /*header height */
+        padding-top: 20px; /*header height */
         padding-bottom: 0px;    /* Footer height */
     }
 
@@ -334,22 +333,20 @@ label {
         font-size: smaller;
         display:inline-block;
       }
-      
- 
 
     .form-group{
-        width: 450px;
-        font-size: 10px;
+        width: 95%;
+        font-size: 12px;
     }
 
     .formInputs{
-        width: 30px;
+        width: 35px;
         float: left;
         text-align: right;
         height: 20px;
         margin-right: 0px;
         padding: 0px;
-        font-size: 8px;
+        font-size: 12px;
       }
     
       /* Chrome, Safari, Edge, Opera */
