@@ -115,44 +115,63 @@ def results():
     playlist_length=0
 
     new_playlist= sp.user_playlist_create(user, name, public=True, collaborative=False, description=description)
-    playlist_id=new_playlist['id']
+    new_playlist_id=new_playlist['id']
+    print("New playlist: ", new_playlist_id)
     playlist_url=new_playlist['external_urls']['spotify']
     playlist_message = "Here's your playlist!"
-  
-    library = sp.current_user_saved_tracks(limit=50, offset=0, market=None)
+
     track_count=0
-    for item in (library['items']):
-        track_id = item['track']['id']
-        track = sp.track(track_id, market=None)
-        features = sp.audio_features(track_id)
-        for feature in features:
-            analysis= sp._get(feature['analysis_url'])
-            #print(json.dumps(analysis, indent=1))
-            tempo=analysis['track']['tempo']
-            track_duration=track['duration_ms']
-            track_name=track['name']
-            track_count=track_count+1
-            print("name")
-            print(track_name)
-            print("tempo")
-            print(tempo)
-            print("duration")
-            print(track_duration)
-            tempo=int(tempo)
-            track_duration=int(track_duration)
-        if playlist_length<desired_time_in_seconds and tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error):
-            playlist_items.append(track_id)
-            playlist_length=playlist_length+(track_duration*1000)
+    offset=0
+    keep_counting=True
+    while keep_counting==True:
+        library = sp.current_user_saved_tracks(limit=50, offset=offset, market=None) 
+        for item in (library['items']):
+            track_id = item['track']['id']
+            print("Track id: ", track_id)
+            track = sp.track(track_id, market=None)
+            features = sp.audio_features(track_id)
+            for feature in features:
+                analysis= sp._get(feature['analysis_url'])
+                #print(json.dumps(analysis, indent=1))
+                tempo=analysis['track']['tempo']
+                track_duration=track['duration_ms']
+                track_name=track['name']
+                track_count=track_count+1
+                print("name")
+                print(track_name)
+                print("tempo")
+                print(tempo)
+                print("duration")
+                print(track_duration)
+                tempo=int(tempo)
+                track_duration=int(track_duration)
+            if playlist_length<desired_time_in_seconds and tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error):
+                playlist_items.append(track_id)
+                playlist_length=playlist_length+(track_duration)
+        if track_count%50 == 0:
+            keep_counting=True
+        else:
+            keep_counting=False
+        print("track count: ",track_count)
+        offset=offset+50
+        print("Keep counting? ", keep_counting)
+        print("offset: ", offset)    
+
+            
     playlist_items_list_out=playlist_items
-    
-    sp.playlist_add_items(playlist_id, playlist_items_list_out, position=None)
+    sp.playlist_add_items(new_playlist_id, playlist_items_list_out, position=None)    
+
     if playlist_length<desired_time_in_seconds:
         playlist_message = "On no! There is not enough music in your library to cover the whole run. You may have to put this playlist on repeat!"
     else:
         playlist_message = "What a great playlist - you have very good taste!"
-    print("Playlist length in minutes: ", playlist_length/1000/60)
+    
+    
+    playlist_length_in_secs=playlist_length/1000
+    playlist_length_in_mins=playlist_length_in_secs/60
+    print("Playlist length in minutes: ", playlist_length_in_mins)
     print(track_count, "tracks checked")
-    return render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'], playlist_id=new_playlist['id'], playlist_message=playlist_message)
+    return render_template("results.html", bpm=bpm, stride=stride_in_metres, km=form_data['desired_distance'], hours=form_data['desired_time_hours'], mins=form_data['desired_time_minutes'], seconds=form_data['desired_time_seconds'], new_playlist_id=new_playlist['id'], playlist_message=playlist_message)
 
    # return sp.playlist_add_items(playlist_id, items)
 
