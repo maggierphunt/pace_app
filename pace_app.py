@@ -16,9 +16,10 @@ spotify_secret = os.getenv('SPOTIPY_CLIENT_SECRET', 'secret')
 spotify_redirect_uri = os.getenv('SPOTIPY_REDIRECT_URI', 'redirect_uri')
 spotify_api_url = os.getenv('api_url', 'api_url')
  
-auth_manager = SpotifyClientCredentials()
+#auth_manager = SpotifyClientCredentials()
 
 
+    
 
 logger = logging.getLogger('examples.create_playlist')
 logging.basicConfig(level='DEBUG')
@@ -43,6 +44,8 @@ def home_page():
 
 #Results
 @app.route("/results", methods=["POST", "GET"])
+
+
 def results():
     scope = "playlist-modify-public user-library-read user-top-read user-read-recently-played" 
     #sp = spotipy.Spotify(auth_manager=auth_manager(scope=scope))
@@ -114,11 +117,7 @@ def results():
     playlist_owner_id=user_id
     playlist_length=0
 
-    new_playlist= sp.user_playlist_create(user, name, public=True, collaborative=False, description=description)
-    new_playlist_id=new_playlist['id']
-    print("New playlist: ", new_playlist_id)
-    playlist_url=new_playlist['external_urls']['spotify']
-    playlist_message = "Here's your playlist!"
+
 
 
     tracks_added_to_list=0
@@ -145,10 +144,10 @@ def results():
                 playlist_items.append(track_id)
                 playlist_length=playlist_length+(track_duration)
                 tracks_added_to_list=tracks_added_to_list+1
-        if saved_track_count%50 == 0:
-            keep_counting_saved=True
-        else:
-            keep_counting_saved=False
+            if saved_track_count%50 == 0 and tracks_added_to_list<100:
+                keep_counting_saved=True
+            else:
+                keep_counting_saved=False
         saved_offset=saved_offset+50
         print("Keep counting? ", keep_counting_saved)
         print("offset: ", saved_offset)
@@ -159,15 +158,15 @@ def results():
     tops_track_count=0
     keep_counting_tops=True
     while keep_counting_tops==True:
-        tops = sp.current_user_top_tracks(limit=20, offset=tops_offset, time_range='medium_term')
+        recents = sp.current_user_top_tracks(limit=20, offset=tops_offset, time_range='medium_term')
         for item in (recents['items']):
-            track_id = item['track']['id']
+            track_id = item['id']
             track = sp.track(track_id, market=None)
             features = sp.audio_features(track_id)
             for feature in features:
                 analysis= sp._get(feature['analysis_url'])
                 #print(json.dumps(analysis, indent=1))
-                tempo=analysis['track']['tempo']
+                tempo=analysis['tempo']
                 track_duration=track['duration_ms']
                 track_name=track['name']
                 tops_track_count=tops_track_count+1
@@ -177,10 +176,10 @@ def results():
                 playlist_items.append(track_id)
                 playlist_length=playlist_length+(track_duration)
                 tracks_added_to_list=tracks_added_to_list+1
-        if recent_track_count%20 == 0:
-            keep_counting_tops=True
-        else:
-            keep_counting_tops=False
+            if recent_track_count%20 == 0 and tracks_added_to_list<100:
+                keep_counting_tops=True
+            else:
+                keep_counting_tops=False
         tops_offset=tops_offset+20
         print("Keep counting? ", keep_counting_tops)
         print("offset: ", tops_offset)
@@ -210,18 +209,23 @@ def results():
             playlist_items.append(track_id)
             playlist_length=playlist_length+(track_duration)
             tracks_added_to_list=tracks_added_to_list+1
-            #if recent_track_count%50 == 0:
-            #   keep_counting_recent=True
-            #else:
-            #  keep_counting_recent=False
-            #recent_offset=recent_offset+50
+            if recent_track_count%50 == 0 and tracks_added_to_list<100:
+               keep_counting_recent=True
+            else:
+              keep_counting_recent=False
+        recent_offset=recent_offset+50
         print("Keep counting? ", keep_counting_recent)
         #print("offset: ", recent_offset)
         print("Saved items checked: ", recent_track_count)   
         print("Tracks added to list so far: ", tracks_added_to_list)
 
+    new_playlist= sp.user_playlist_create(user, name, public=True, collaborative=False, description=description)
+    new_playlist_id=new_playlist['id']
+    print("New playlist: ", new_playlist_id)
+    
+    playlist_url=new_playlist['external_urls']['spotify']
+    playlist_message = "Here's your playlist!"
     playlist_items_list_out=playlist_items
-    print(playlist_items_list_out)
     sp.playlist_add_items(new_playlist_id, playlist_items_list_out, position=None)    
     
     playlist_length_in_secs=playlist_length/1000

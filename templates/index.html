@@ -35,7 +35,7 @@
         </nav>
         </div>
 <div> 
-<div class="content-wrap"><p>Enter your pace details from some past runs here, to generate your ideal bpm-tailored running playlist.<br><br>
+<div class="content-wrap"><p id="intro">Enter your pace details from some past runs here, to generate your ideal bpm-tailored running playlist.<br><br>
   You will need to know, for each run, your average pace per kilometer (in minutes and seconds), and your average cadence, aka steps per minute (spm), or your distance and the step count for that run.<br><br>
 Please select which you can provide from the dropdown.</p>
 
@@ -155,9 +155,15 @@ Please select which you can provide from the dropdown.</p>
     <label for="exampleCheck1">I understand that my data will only be held for the purposes of this calculation.</label>
   </div><br></div>
   <div class="row center-row">
-  <button type="submit" id="submit-button-user_input_form" class="btn btn-dark" form="user_input_form">Submit</button></div></div></section>
+  <button type="submit" id="submit-button-user_input_form" onclick="loading();" class="btn btn-dark" form="user_input_form">Submit</button></div>
+</div>
+
+  
 </form>
-  </div> </div>
+<div id="progressBar"><div id="myProgress">
+  <div id="myBar"></div></div><p>Browsing your library! This may take a couple of minutes.</p></div>
+  </div> </section>
+</div>
 </div>
 </div>
 <footer>
