@@ -148,7 +148,7 @@ def results():
             if playlist_length<desired_time_in_seconds and tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error):
                 playlist_items.append(track_id)
                 playlist_length=playlist_length+(track_duration)
-        if track_count%50 == 0:
+        if track_count%50 == 0 and tracks_added_to_list<100:
             keep_counting=True
         else:
             keep_counting=False
