@@ -9,6 +9,7 @@ import logging
 import json
 import time
 import sys
+from requests.exceptions import ReadTimeout
  
 #Spotify params
 spotify_client_id = os.getenv('SPOTIPY_CLIENT_ID', 'client_id')
@@ -48,8 +49,7 @@ def home_page():
 
 def results():
     scope = "playlist-modify-public user-library-read user-top-read user-read-recently-played" 
-    #sp = spotipy.Spotify(auth_manager=auth_manager(scope=scope))
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope), requests_timeout=10, retries=10)
     sp.trace = True
     user_id = sp.me()['id']
     playlist_items=[]
@@ -117,9 +117,6 @@ def results():
     playlist_owner_id=user_id
     playlist_length=0
 
-
-
-
     tracks_added_to_list=0
 
     saved_offset=0
@@ -133,7 +130,6 @@ def results():
             features = sp.audio_features(track_id)
             for feature in features:
                 analysis= sp._get(feature['analysis_url'])
-                #print(json.dumps(analysis, indent=1))
                 tempo=analysis['track']['tempo']
                 track_duration=track['duration_ms']
                 track_name=track['name']
@@ -143,80 +139,74 @@ def results():
             if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
                 playlist_items.append(track_id)
                 playlist_length=playlist_length+(track_duration)
-
                 tracks_added_to_list=tracks_added_to_list+1
-            if saved_track_count%50 == 0 and tracks_added_to_list<100:
+            if saved_track_count%50 == 0 and tracks_added_to_list<101:
                 keep_counting_saved=True
             else:
                 keep_counting_saved=False
         saved_offset=saved_offset+50
         print("Keep counting? ", keep_counting_saved)
-        print("offset: ", saved_offset)
         print("Saved items checked: ", saved_track_count)   
         print("Tracks added to list so far: ", tracks_added_to_list)
 
-    #tops_offset=0
-    #tops_track_count=0
-   # keep_counting_tops=True
-   # while keep_counting_tops==True:
-   #     recents = sp.current_user_top_tracks(limit=20, offset=tops_offset, time_range='medium_term')
-   #     for item in (recents['items']):
-   #         track_id = item['id']
-   #         track = sp.track(track_id, market=None)
-    #        features = sp.audio_features(track_id)
-     #       for feature in features:
-      #          analysis= sp._get(feature['analysis_url'])
-                #print(json.dumps(analysis, indent=1))
-       #         tempo=analysis['track']['tempo']
-        #        track_duration=track['duration_ms']
-         #       track_name=track['name']
-          #      tops_track_count=tops_track_count+1
-           #     tempo=int(tempo)
-            #    track_duration=int(track_duration)
-           # if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
-            #    playlist_items.append(track_id)
-             #   playlist_length=playlist_length+(track_duration)
-              #  tracks_added_to_list=tracks_added_to_list+1
-            #if recent_track_count%20 == 0 and tracks_added_to_list<100:
-            #    keep_counting_tops=True
-            #else:
-             #   keep_counting_tops=False
-        #tops_offset=tops_offset+20
-        #print("Keep counting? ", keep_counting_tops)
-        #print("offset: ", tops_offset)
-        #print("Saved items checked: ", tops_track_count)   
-        #print("Tracks added to list so far: ", tracks_added_to_list)
+    tops_offset=0
+    tops_track_count=0
+    keep_counting_tops=True
+    while keep_counting_tops==True and tracks_added_to_list<101:
+        tops = sp.current_user_top_tracks(limit=20, offset=tops_offset, time_range='medium_term')
+        for track in (recents['tracks']):
+            track_id = track['id']
+            track = sp.track(track_id, market=None)
+            features = sp.audio_features(track_id)
+            for feature in features:
+                analysis= sp._get(feature['analysis_url'])
+                tempo=analysis['track']['tempo']
+                track_duration=track['duration_ms']
+                track_name=track['name']
+                tops_track_count=tops_track_count+1
+                tempo=int(tempo)
+                track_duration=int(track_duration)
+            if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
+                playlist_items.append(track_id)
+                playlist_length=playlist_length+(track_duration)
+                tracks_added_to_list=tracks_added_to_list+1
+            if recent_track_count%20 == 0 and tracks_added_to_list<101:
+                keep_counting_tops=True
+            else:
+                keep_counting_tops=False
+        tops_offset=tops_offset+20
+        print("Keep counting? ", keep_counting_tops)
+        print("Saved items checked: ", tops_track_count)   
+        print("Tracks added to list so far: ", tracks_added_to_list)
 
     
     #recent_offset=0
     recent_track_count=0
     #keep_counting_recent=True
-    #while keep_counting_recent==True:
-    recents = sp.current_user_recently_played(limit=100, after=None, before=None) 
-    for item in (recents['items']):
-        track_id = item['track']['id']
-        track = sp.track(track_id, market=None)
-        features = sp.audio_features(track_id)
-        for feature in features:
-            analysis= sp._get(feature['analysis_url'])
-            #print(json.dumps(analysis, indent=1))
-            tempo=analysis['track']['tempo']
-            track_duration=track['duration_ms']
-            track_name=track['name']
-            recent_track_count=recent_track_count+1
-            tempo=int(tempo)
-            track_duration=int(track_duration)
-        if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
-            playlist_items.append(track_id)
-            playlist_length=playlist_length+(track_duration)
-            tracks_added_to_list=tracks_added_to_list+1
-            if recent_track_count%50 == 0 and tracks_added_to_list<100:
-               keep_counting_recent=True
+    while tracks_added_to_list<101:
+        recents = sp.current_user_recently_played(limit=100, after=None, before=None) 
+        for item in (recents['items']):
+            track_id = item['track']['id']
+            track = sp.track(track_id, market=None)
+            features = sp.audio_features(track_id)
+            for feature in features:
+                analysis= sp._get(feature['analysis_url'])
+                tempo=analysis['track']['tempo']
+                track_duration=track['duration_ms']
+                track_name=track['name']
+                recent_track_count=recent_track_count+1
+                tempo=int(tempo)
+                track_duration=int(track_duration)
+            if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
+                playlist_items.append(track_id)
+                playlist_length=playlist_length+(track_duration)
+                tracks_added_to_list=tracks_added_to_list+1
+            if recent_track_count%50 == 0 and tracks_added_to_list<101:
+                keep_counting_recent=True
             else:
-              keep_counting_recent=False
+                keep_counting_recent=False
         recent_offset=recent_offset+50
         print("Keep counting? ", keep_counting_recent)
-        #print("offset: ", recent_offset)
         print("Saved items checked: ", recent_track_count)   
         print("Tracks added to list so far: ", tracks_added_to_list)
 
