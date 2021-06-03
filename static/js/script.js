@@ -13,7 +13,14 @@ function onLoadHide() {
     document.getElementById("ifDistance2").style.display = "none";
     document.getElementById("ifDistance3").style.display = "none";
     document.getElementById("progressBar").style.display = "none";
+    document.getElementById("cadencecalc").style.display = "none";
+    document.getElementById("librarybrowse").style.display = "none";
+    document.getElementById("topbrowse").style.display = "none";
+    document.getElementById("recentbrowse").style.display = "none";
+    document.getElementById("playlistcreate").style.display = "none";
+    document.getElementById("playlistadd").style.display = "none";
 }
+
 
 function yesnoCheck(that) {
    
@@ -57,19 +64,70 @@ function loading() {
     document.getElementById("intro").style.display = "none";
     document.getElementById("CadenceorNot").style.display = "none";
     if (i == 0) {
+        
         i = 1;
         var elem = document.getElementById("myBar");
         var width = 1;
-        var id = setInterval(frame, 25000);
+        var id = setInterval(frame, 20000);
         function frame() {
-        if (width >= 100) {
+            if (width >= 100) {
             clearInterval(id);
             i = 0;
+            if (elem.style.width < 10) {
+                document.getElementById("cadencecalc").style.display = "block";
+                document.getElementById("librarybrowse").style.display = "none";
+                document.getElementById("topbrowse").style.display = "none";
+                document.getElementById("recentbrowse").style.display = "none";
+                document.getElementById("playlistcreate").style.display = "none";
+                document.getElementById("playlistadd").style.display = "none";
+            }
+            if (elem.style.width < 30) {
+                document.getElementById("cadencecalc").style.display = "none";
+                document.getElementById("librarybrowse").style.display = "block";
+                document.getElementById("topbrowse").style.display = "none";
+                document.getElementById("recentbrowse").style.display = "none";
+                document.getElementById("playlistcreate").style.display = "none";
+                document.getElementById("playlistadd").style.display = "none";
+            }
+            if (elem.style.width < 50) {
+                document.getElementById("cadencecalc").style.display = "none";
+                document.getElementById("librarybrowse").style.display = "none";
+                document.getElementById("topbrowse").style.display = "block";
+                document.getElementById("recentbrowse").style.display = "none";
+                document.getElementById("playlistcreate").style.display = "none";
+                document.getElementById("playlistadd").style.display = "none";
+            }
+            if (elem.style.width < 70) {
+                document.getElementById("cadencecalc").style.display = "none";
+                document.getElementById("librarybrowse").style.display = "none";
+                document.getElementById("topbrowse").style.display = "none";
+                document.getElementById("recentbrowse").style.display = "block";
+                document.getElementById("playlistcreate").style.display = "none";
+                document.getElementById("playlistadd").style.display = "none";
+            }
+            if (elem.style.width < 90) {
+                document.getElementById("cadencecalc").style.display = "none";
+                document.getElementById("librarybrowse").style.display = "none";
+                document.getElementById("topbrowse").style.display = "none";
+                document.getElementById("recentbrowse").style.display = "none";
+                document.getElementById("playlistcreate").style.display = "block";
+                document.getElementById("playlistadd").style.display = "none";
+            }
+            if (elem.style.width <= 100) {
+                document.getElementById("cadencecalc").style.display = "none";
+                document.getElementById("librarybrowse").style.display = "none";
+                document.getElementById("topbrowse").style.display = "none";
+                document.getElementById("recentbrowse").style.display = "none";
+                document.getElementById("playlistcreate").style.display = "none";
+                document.getElementById("playlistadd").style.display = "block";
+            }
         } else {
             width++;
             elem.style.width = width + "%";
+            
         }
         }
+        
     }
     
 }

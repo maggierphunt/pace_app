@@ -154,7 +154,7 @@ def results():
     keep_counting_tops=True
     while keep_counting_tops==True and tracks_added_to_list<101:
         tops = sp.current_user_top_tracks(limit=20, offset=tops_offset, time_range='medium_term')
-        for track in (recents['tracks']):
+        for track in (tops['tracks']):
             track_id = track['id']
             track = sp.track(track_id, market=None)
             features = sp.audio_features(track_id)
@@ -170,7 +170,7 @@ def results():
                 playlist_items.append(track_id)
                 playlist_length=playlist_length+(track_duration)
                 tracks_added_to_list=tracks_added_to_list+1
-            if recent_track_count%20 == 0 and tracks_added_to_list<101:
+            if tops_track_count%20 == 0 and tracks_added_to_list<101:
                 keep_counting_tops=True
             else:
                 keep_counting_tops=False
