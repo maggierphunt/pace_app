@@ -20,7 +20,7 @@
 
 
 .textbox
-    {display: inline;
+    {display: inline-block;
     font-size: 14px}
 
 
@@ -116,20 +116,21 @@ nav{
 
 }
 
-p { display: inline;}
+p { display: inline-block;}
 
 a{
-    display: inline;
+    display: inline-block;
     color: greenyellow;
     list-style: none;
+    padding: 0;
     
 }
 
 p a{
     
     color: greenyellow;
-    float: left;
-    width: 50%;
+    /*float: left;
+    width: 50%;*/
     padding: 0;
     margin: 0;
     display: inline;
