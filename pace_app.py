@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, Response
 import spotipy
+import requests
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.oauth2  import SpotifyClientCredentials
 import os
@@ -52,6 +53,7 @@ def results():
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope), requests_timeout=10, retries=10)
     sp.trace = True
     user_id = sp.me()['id']
+    all_songs=[]
     playlist_items=[]
     form_data = request.form
 
@@ -130,12 +132,16 @@ def results():
             features = sp.audio_features(track_id)
             for feature in features:
                 analysis= sp._get(feature['analysis_url'])
-                tempo=analysis['track']['tempo']
-                track_duration=track['duration_ms']
-                track_name=track['name']
-                saved_track_count=saved_track_count+1
-                tempo=int(tempo)
-                track_duration=int(track_duration)
+                r = requests.get('https://api.spotify.com')
+                if r.status_code == 404:
+                    print("skipped due to error")
+                else:
+                    tempo=analysis['track']['tempo']
+                    track_duration=track['duration_ms']
+                    track_name=track['name']
+                    saved_track_count=saved_track_count+1
+                    tempo=int(tempo)
+                    track_duration=int(track_duration)
             if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
                 playlist_items.append(track_id)
                 playlist_length=playlist_length+(track_duration)
@@ -160,12 +166,16 @@ def results():
             features = sp.audio_features(track_id)
             for feature in features:
                 analysis= sp._get(feature['analysis_url'])
-                tempo=analysis['track']['tempo']
-                track_duration=track['duration_ms']
-                track_name=track['name']
-                tops_track_count=tops_track_count+1
-                tempo=int(tempo)
-                track_duration=int(track_duration)
+                r = requests.get('https://api.spotify.com')
+                if r.status_code == 404:
+                    print("skipped due to error")
+                else:
+                    tempo=analysis['track']['tempo']
+                    track_duration=track['duration_ms']
+                    track_name=track['name']
+                    tops_track_count=tops_track_count+1
+                    tempo=int(tempo)
+                    track_duration=int(track_duration)
             if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
                 playlist_items.append(track_id)
                 playlist_length=playlist_length+(track_duration)
@@ -191,12 +201,16 @@ def results():
             features = sp.audio_features(track_id)
             for feature in features:
                 analysis= sp._get(feature['analysis_url'])
-                tempo=analysis['track']['tempo']
-                track_duration=track['duration_ms']
-                track_name=track['name']
-                recent_track_count=recent_track_count+1
-                tempo=int(tempo)
-                track_duration=int(track_duration)
+                r = requests.get('https://api.spotify.com')
+                if r.status_code == 404:
+                    print("skipped due to error")
+                else:
+                    tempo=analysis['track']['tempo']
+                    track_duration=track['duration_ms']
+                    track_name=track['name']
+                    recent_track_count=recent_track_count+1
+                    tempo=int(tempo)
+                    track_duration=int(track_duration)
             if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
                 playlist_items.append(track_id)
                 playlist_length=playlist_length+(track_duration)
@@ -209,6 +223,8 @@ def results():
         print("Keep counting? ", keep_counting_recent)
         print("Saved items checked: ", recent_track_count)   
         print("Tracks added to list so far: ", tracks_added_to_list)
+    
+
 
     new_playlist= sp.user_playlist_create(user, name, public=True, collaborative=False, description=description)
     new_playlist_id=new_playlist['id']
@@ -217,7 +233,7 @@ def results():
     playlist_url=new_playlist['external_urls']['spotify']
     playlist_message = "Here's your playlist!"
 
-    playlist_items_list_out=playlist_items
+    playlist_items_list_out=set(playlist_items)
     sp.playlist_add_items(new_playlist_id, playlist_items_list_out, position=None)    
     
     playlist_length_in_secs=playlist_length/1000
