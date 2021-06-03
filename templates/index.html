@@ -2,7 +2,7 @@
 <html>
 <head>
     <!-- title-->
-        <title>Cadence</title>
+        <title>Cadenza</title>
         <link rel="icon" href="../static/images/icon.png">
     <!-- stylesheets -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -22,7 +22,7 @@
 </head>
 <body onload="onLoadHide()">  
     <section>
-        <div id="header" class="header"><h1>Cadence</h1>
+        <div id="header" class="header"><h1>Cadenza</h1>
             <nav>
             <ul>
                 <li class="current-page">
@@ -35,11 +35,11 @@
         </nav>
         </div>
 <div> 
-<div class="content-wrap"><p>Enter your pace details from some past runs here, to generate your ideal bpm-tailored running playlist.<br><br>
+<div class="content-wrap"><p id="intro">Enter your pace details from some past runs here, to generate your ideal bpm-tailored running playlist.<br><br>
   You will need to know, for each run, your average pace per kilometer (in minutes and seconds), and your average cadence, aka steps per minute (spm), or your distance and the step count for that run.<br><br>
 Please select which you can provide from the dropdown.</p>
 
-<div class="row  center-row">
+<div class="row center-row">
   <select class="form-control form-control-sm formInputs2" id="CadenceorNot" onchange="yesnoCheck(this);">
     <option value="Cadence">Cadence</option>
     <option value="DistanceAndSteps">Distance and Steps</option>
@@ -49,7 +49,6 @@ Please select which you can provide from the dropdown.</p>
     
     <div class="form-group">
                 
-    
       <h3>Calculator</h3><br>
       
     <div class="row">
@@ -155,9 +154,15 @@ Please select which you can provide from the dropdown.</p>
     <label for="exampleCheck1">I understand that my data will only be held for the purposes of this calculation.</label>
   </div><br></div>
   <div class="row center-row">
-  <button type="submit" id="submit-button-user_input_form" class="btn btn-dark" form="user_input_form">Submit</button></div></div></section>
+  <button type="submit" id="submit-button-user_input_form" onclick="loading();" class="btn btn-dark" form="user_input_form">Submit</button></div>
+</div>
+
+  
 </form>
-  </div> </div>
+<div id="progressBar"><div id="myProgress">
+  <div id="myBar"></div></div><p>Browsing your library! This may take a couple of minutes.</p></div>
+  </div> </section>
+</div>
 </div>
 </div>
 <footer>
@@ -165,7 +170,7 @@ Please select which you can provide from the dropdown.</p>
   <li><a href="https://www.linkedin.com/in/maggierphunt/" title="Connect on Linkedin" target=blank><img src="../static/images/linkedin.png" alt="Reach out on Linkedin" style="width:auto;height:18px;"></a></li>
   <li><a href="https://www.facebook.com/sharer/sharer.php?u=cadence-313811.appspot.com" title="Share on Facebook" target="_blank"" target=blank><img src="../static/images/facebook new logo white.png" alt="Share on Facebook" style="width:auto;height:22px;"></a></li>
   <li><a href="https://www.businessinsider.com/how-to-add-spotify-music-to-instagram-story?r=US&IR=T" title="How to share on Instagram" target=blank><img src="../static/images/instagram.png" alt="Share on Instagram" style="width:auto;height:20px;"></a></li>
-  <li><a href="https://twitter.com/intent/tweet?text=Have%20you%20used%20the%20Cadence%20app%20yet?%20Go%20to%20cadence-313811.appspot.com%20to%20generate%20your%20own%20running%20playlist!" title="Tweet about Cadence" target=blank><img src="../static/images/Twitter_Social_Icon_Circle_White.png" alt="Tweet about Cadence!" style="width:auto;height:20px;"></a></li>
+  <li><a href="https://twitter.com/intent/tweet?text=Have%20you%20used%20the%20Cadenza%20app%20yet?%20Go%20to%20cadence-313811.appspot.com%20to%20generate%20your%20own%20running%20playlist!" title="Tweet about Cadenza" target=blank><img src="../static/images/Twitter_Social_Icon_Circle_White.png" alt="Tweet about Cadenza!" style="width:auto;height:20px;"></a></li>
   <li><a href="https://github.com/maggierphunt/pace_app" title="View on GitHub" target=blank><img src="../static/images/githublogo.png" alt="See the code!" style="width:auto;height:21px;"></a></li>
   <li><a href="https://www.justgiving.com/fundraising/greatnorthmaggie" title="Support Alzheimer's Society" target=blank><img src="../static/images/justgiving.png" alt="Sponsor me!" style="width:auto;height:20px;"></a></li>
 </ul>
