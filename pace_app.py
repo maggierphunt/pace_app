@@ -143,6 +143,7 @@ def results():
             if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
                 playlist_items.append(track_id)
                 playlist_length=playlist_length+(track_duration)
+
                 tracks_added_to_list=tracks_added_to_list+1
             if saved_track_count%50 == 0 and tracks_added_to_list<100:
                 keep_counting_saved=True
@@ -225,6 +226,7 @@ def results():
     
     playlist_url=new_playlist['external_urls']['spotify']
     playlist_message = "Here's your playlist!"
+
     playlist_items_list_out=playlist_items
     sp.playlist_add_items(new_playlist_id, playlist_items_list_out, position=None)    
     
