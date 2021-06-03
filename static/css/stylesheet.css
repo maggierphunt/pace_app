@@ -20,8 +20,10 @@
 
 
 .textbox
-{display: inline;
+    {display: inline;
     font-size: 14px}
+
+
 /*header and footer*/
 #header {
     height: 120px;

@@ -103,8 +103,8 @@ def results():
     
     #make playlist
     
-    playlist_name="Cadence Playlist"
-    playlist_description="Made for you by the Cadence App, to run {distance}km in {h}h{m}m{s}s. Keep to the beat!".format(
+    playlist_name="Cadenza Playlist"
+    playlist_description="Made for you by the Cadenza App, to run {distance}km in {h}h{m}m{s}s. Keep to the beat!".format(
         distance = desired_distance,
         h = desired_time_hours,
         m = desired_time_minutes,
@@ -154,37 +154,37 @@ def results():
         print("Saved items checked: ", saved_track_count)   
         print("Tracks added to list so far: ", tracks_added_to_list)
 
-    tops_offset=0
-    tops_track_count=0
-    keep_counting_tops=True
-    while keep_counting_tops==True:
-        recents = sp.current_user_top_tracks(limit=20, offset=tops_offset, time_range='medium_term')
-        for item in (recents['items']):
-            track_id = item['id']
-            track = sp.track(track_id, market=None)
-            features = sp.audio_features(track_id)
-            for feature in features:
-                analysis= sp._get(feature['analysis_url'])
+    #tops_offset=0
+    #tops_track_count=0
+   # keep_counting_tops=True
+   # while keep_counting_tops==True:
+   #     recents = sp.current_user_top_tracks(limit=20, offset=tops_offset, time_range='medium_term')
+   #     for item in (recents['items']):
+   #         track_id = item['id']
+   #         track = sp.track(track_id, market=None)
+    #        features = sp.audio_features(track_id)
+     #       for feature in features:
+      #          analysis= sp._get(feature['analysis_url'])
                 #print(json.dumps(analysis, indent=1))
-                tempo=analysis['tempo']
-                track_duration=track['duration_ms']
-                track_name=track['name']
-                tops_track_count=tops_track_count+1
-                tempo=int(tempo)
-                track_duration=int(track_duration)
-            if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
-                playlist_items.append(track_id)
-                playlist_length=playlist_length+(track_duration)
-                tracks_added_to_list=tracks_added_to_list+1
-            if recent_track_count%20 == 0 and tracks_added_to_list<100:
-                keep_counting_tops=True
-            else:
-                keep_counting_tops=False
-        tops_offset=tops_offset+20
-        print("Keep counting? ", keep_counting_tops)
-        print("offset: ", tops_offset)
-        print("Saved items checked: ", tops_track_count)   
-        print("Tracks added to list so far: ", tracks_added_to_list)
+       #         tempo=analysis['track']['tempo']
+        #        track_duration=track['duration_ms']
+         #       track_name=track['name']
+          #      tops_track_count=tops_track_count+1
+           #     tempo=int(tempo)
+            #    track_duration=int(track_duration)
+           # if playlist_length<desired_time_in_seconds and ((tempo<(bpm+margin_of_error) and tempo>(bpm-margin_of_error))or (0.5*tempo<(bpm+margin_of_error) and 0.5*tempo>(bpm-margin_of_error)) or (2*tempo<(bpm+margin_of_error) and 2*tempo>(bpm-margin_of_error))):
+            #    playlist_items.append(track_id)
+             #   playlist_length=playlist_length+(track_duration)
+              #  tracks_added_to_list=tracks_added_to_list+1
+            #if recent_track_count%20 == 0 and tracks_added_to_list<100:
+            #    keep_counting_tops=True
+            #else:
+             #   keep_counting_tops=False
+        #tops_offset=tops_offset+20
+        #print("Keep counting? ", keep_counting_tops)
+        #print("offset: ", tops_offset)
+        #print("Saved items checked: ", tops_track_count)   
+        #print("Tracks added to list so far: ", tracks_added_to_list)
 
     
     #recent_offset=0

@@ -60,7 +60,7 @@ function loading() {
         i = 1;
         var elem = document.getElementById("myBar");
         var width = 1;
-        var id = setInterval(frame, 5000);
+        var id = setInterval(frame, 25000);
         function frame() {
         if (width >= 100) {
             clearInterval(id);
