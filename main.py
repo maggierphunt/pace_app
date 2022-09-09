@@ -192,7 +192,7 @@ def results():
     recent_track_count=0
     #keep_counting_recent=True
     #while keep_counting_recent==True:
-    recents = sp.current_user_recently_played(limit=100, after=None, before=None) 
+    recents = sp.current_user_recently_played(limit=50, after=None, before=None) 
     for item in (recents['items']):
         track_id = item['track']['id']
         track = sp.track(track_id, market=None)
@@ -246,5 +246,6 @@ def results():
    # return sp.playlist_add_items(playlist_id, items)
 
 #debug
-if __name__ == '__main__':
-    app.run(app.run(debug=True)) #runs the app. the debug part - unlocks debugging feature
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
